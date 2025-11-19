@@ -8,7 +8,8 @@
     <script>
       // replace abcd1234.ngrok-free.app with your ngrok HTTPS host
       //const ws = new WebSocket('wss://abcd1234.ngrok-free.app/ws');
-      const ws = new WebSocket('wss://898d84e50fad.ngrok-free.app/ws');
+	  const ws_esp = "wss://99c9504ee89f.ngrok-free.app/ws";
+      const ws = new WebSocket(ws_esp);
 	  
       const log = document.getElementById('log');
       function append(t){ log.value += t + '\n'; log.scrollTop = log.scrollHeight; }
@@ -26,3 +27,4 @@
     </script>
   </body>
 </html>
+
