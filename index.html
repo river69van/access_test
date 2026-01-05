@@ -17,7 +17,7 @@
     const remoteAudio = document.getElementById('remoteAudio');
 
     // Replace with your WebSocket URL from ngrok or your Ubuntu public IP
-    const ws = new WebSocket('wss://YOUR_PUBLIC_WS_URL');
+    const ws = new WebSocket('wss://ceilinged-unmodern-georgiana.ngrok-free.dev ');
 
     ws.onmessage = async (event) => {
       const msg = JSON.parse(event.data);
@@ -59,3 +59,4 @@
   </script>
 </body>
 </html>
+
