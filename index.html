@@ -1,131 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Group Proj</title>
-  <style>
-    body {
-		margin: 0;
-		font-family: Arial, sans-serif;
-		/*background: #fff url('g.gif') no-repeat center center;*/
-		background-size: cover;
-		color: #000;
-    }
-    header {
-      background: #222;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background: #444;
-      color: #fff;
-      padding: 10px;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-right: 15px;
-      font-weight: bold;
-    }
-    main {
-      padding: 20px;
-      max-width: 900px;
-      /*margin: auto;*/
-	  margin-left: 0; /* sets left edge to 0 */
-      margin-right: 0; /* optional, remove any horizontal spacing */
-      background: #fff;
-    }
-    footer {
-      background: #222;
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
-    .action-btn {
-      padding: 10px 20px;
-      background: #0077cc;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .action-btn:hover {
-      background: #005fa3;
-    }
-	.lesson-section {
-	  display: flex;
-	  align-items: flex-start; /* aligns top of text with top of image */
-	  gap: 20px; /* space between text and image */
-	  margin-bottom: 30px;
-	}
-
-	.lesson-text {
-	  flex: 2; /* text takes more space */
-	}
-
-	.lesson-image {
-	  flex: 1; /* image takes less space */
-	}
-
-	.lesson-image img {
-	  max-width: 100%;
-	  height: auto;
-	  border-radius: 10px;
-	}
-  </style>
+  <meta charset="utf-8">
+  <title>P2P VoIP (Cross-Platform)</title>
 </head>
 <body>
-  <header style="background-image: url('g.gif'); background-size: cover; background-position: center; padding: 60px 20px; color: #fff; text-align: center;">
-    <h1>Explore The Site</h1>
-    <h2>Group 4</h2>
-  </header>
+  <h2>P2P Voice Call (Any Device)</h2>
 
-  <nav>
-    <a href="#">Home</a>
-    <a href="about.html" target="_blank">About</a>
-	<a href="more.html" target="_blank">Learn More</a>
-  </nav>
-	
-  <main>
-    <h2>Lessons</h2>
+  <button onclick="init()">Init</button>
+  <button onclick="makeOffer()">Make Offer</button>
+  <button onclick="makeAnswer()">Make Answer</button>
 
-    <a href="LP1.pdf" target="_blank" class="action-btn" style="display:inline-block; text-decoration:none;">LP1</a>
-	<a href="LP2.pdf" target="_blank" class="action-btn" style="display:inline-block; text-decoration:none;">LP2</a>
-	<a href="LP3.pdf" target="_blank" class="action-btn" style="display:inline-block; text-decoration:none;">LP3</a>
-	<a href="LP4.pdf" target="_blank" class="action-btn" style="display:inline-block; text-decoration:none;">LP4</a>
-	<div class="lesson-section">
-	  <div class="lesson-text">
-		<hr style="border: 0; height: 2px; background-color: #0077cc; margin: 20px 0;">
+  <h3>Local SDP</h3>
+  <textarea id="local" rows="10" cols="80"></textarea>
 
-			<h3>Members</h3> 
-			<p>
-				RIVERA, IMYRSON B.<br>
-				SARSATA, JULIE ANN C.<br>
-				SILLA, JHON PAOLO D.<br>
-				TAFALLA, SOFIA J.<br>
-				TOLENTINO, FELIX JULES M.<br>
-				TOMALABCAD, GLADYS P.<br>
-				VERDEFLOR, KEMAIRAH LOUISSE C.<br>
-				VILLATURA, JOSEPH Q.<br>
-				VILLOCERO, REALYN G.<br>
-				VILLONA, FLORENCE L.<br>
-				ZETA, RODMAR CLARENCE N.
-			</p>
-    </div>
-	  <div class="lesson-image">
-	  <br><br><br><br>
-		<img src="chungi.png" alt="Concepts Image">
-	  </div>
-	</div>
-  </main>
+  <h3>Remote SDP</h3>
+  <textarea id="remote" rows="10" cols="80"></textarea>
 
-  
+  <script>
+    let pc;
+
+    async function init() {
+      pc = new RTCPeerConnection({
+        iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+      });
+
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(t => pc.addTrack(t, stream));
+
+      pc.onicecandidate = e => {
+        if (!e.candidate) {
+          document.getElementById("local").value =
+            JSON.stringify(pc.localDescription);
+        }
+      };
+
+      pc.ontrack = e => {
+        const audio = document.createElement("audio");
+        audio.srcObject = e.streams[0];
+        audio.autoplay = true;
+        document.body.appendChild(audio);
+      };
+    }
+
+    async function makeOffer() {
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+    }
+
+    async function makeAnswer() {
+      const remote = JSON.parse(
+        document.getElementById("remote").value
+      );
+      await pc.setRemoteDescription(remote);
+
+      const answer = await pc.createAnswer();
+      await pc.setLocalDescription(answer);
+    }
+  </script>
 </body>
 </html>
-
-
-
