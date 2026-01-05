@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>P2P VoIP</title>
+  <title>GitHub Pages VoIP Peer</title>
 </head>
 <body>
-  <h1>P2P VoIP</h1>
-  <button id="callBtn">Start Call</button>
+  <h1>GitHub Pages Peer</h1>
+  <button id="startBtn">Start Call</button>
   <audio id="localAudio" autoplay muted></audio>
   <audio id="remoteAudio" autoplay></audio>
 
   <script>
-    let localStream;
     let pc;
-    const callBtn = document.getElementById('callBtn');
+    let localStream;
     const localAudio = document.getElementById('localAudio');
     const remoteAudio = document.getElementById('remoteAudio');
+    const startBtn = document.getElementById('startBtn');
 
-    // Replace with your WebSocket URL from ngrok or your Ubuntu public IP
+    // Same WebSocket URL as Ubuntu side
     const ws = new WebSocket('wss://ceilinged-unmodern-georgiana.ngrok-free.dev ');
 
     ws.onmessage = async (event) => {
@@ -33,19 +33,19 @@
       }
     };
 
-    callBtn.onclick = async () => {
+    startBtn.onclick = async () => {
       localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       localAudio.srcObject = localStream;
 
-      pc = new RTCPeerConnection();
+      pc = new RTCPeerConnection({
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+      });
 
-      pc.onicecandidate = event => {
-        if (event.candidate) {
-          ws.send(JSON.stringify({ candidate: event.candidate }));
-        }
+      pc.onicecandidate = (event) => {
+        if (event.candidate) ws.send(JSON.stringify({ candidate: event.candidate }));
       };
 
-      pc.ontrack = event => {
+      pc.ontrack = (event) => {
         remoteAudio.srcObject = event.streams[0];
       };
 
@@ -59,4 +59,3 @@
   </script>
 </body>
 </html>
-
