@@ -95,6 +95,36 @@ footer{
     text-align:center;
     padding:20px;
 }
+
+
+
+.popup-small {
+    position: absolute;
+    min-width: 220px;
+    background: #fff;
+    border: 3px solid #e74c3c;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.popup-small.show {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.popup-small img{
+    display:block;
+    margin-top:10px;
+    border-radius:6px;
+    max-width:100%;
+}
 </style>
 </head>
 
@@ -126,11 +156,54 @@ A proper stance improves balance, mobility, and striking power.
 </p>
 
 <ul>
-<li>Stand with feet shoulder width apart</li>
-<li>Dominant foot slightly behind</li>
-<li>Knees slightly bent</li>
-<li>Stick hand forward</li>
-<li>Non-weapon hand protects the body</li>
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>Feet shoulder width apart improves balance and mobility during combat.</p>
+            <img src='R.gif' width='10'>`)">
+            Stand with feet shoulder width apart
+        </button>
+    </li>
+
+    <li>
+
+        <button onclick="togglePopup(this, `
+            <p>The dominant foot stays slightly behind to generate stronger strikes.</p>
+            <img src='asa.jpeg' width='10'>`)">
+            Dominant foot slightly behind
+        </button>
+
+
+    </li>
+
+    <li>
+
+        <button onclick="togglePopup(this, `
+            <p>Bent knees help you move quickly and maintain stability.</p>
+            <img src='asa.jpeg' width='10'>`)">
+            Knees slightly bent
+        </button>
+
+    </li>
+
+    <li>
+
+        <button onclick="togglePopup(this, `
+            <p>The stick hand stays forward so your weapon reaches the opponent faster.</p>
+            <img src='asa.jpeg' width='10'>`)">
+            Stick hand forward
+        </button>
+        
+    </li>
+
+    <li>
+
+        <button onclick="togglePopup(this, `
+            <p>The non-weapon hand protects your body and can control the opponent.</p>
+            <img src='asa.jpeg' width='10'>`)">
+            Non-weapon hand protects the body
+        </button>
+
+    </li>
 </ul>
 
 <div class="video">
@@ -138,8 +211,8 @@ A proper stance improves balance, mobility, and striking power.
     src="https://www.youtube.com/embed/jqRQZhmvUKU"
     title="YouTube video player"
     frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-allowfullscreen>
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
 </iframe>
 </div>
 
@@ -162,10 +235,43 @@ In Filipino Martial Arts, the stick is usually held near the base to maximize re
 </p>
 
 <ul>
-<li>Hold the stick about one fist away from the bottom</li>
-<li>Keep grip firm but relaxed</li>
-<li>Thumb wrapped around the stick</li>
-<li>Allow wrist flexibility for faster strikes</li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>Holding the stick about one fist away from the bottom increases reach and leverage when striking.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/8/8a/Arnis_grip.jpg' width='200'>
+            `)">
+            Hold the stick about one fist away from the bottom
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>A firm but relaxed grip allows control while keeping the wrist flexible for fast movements.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/8/8a/Arnis_grip.jpg' width='200'>
+            `)">
+            Keep grip firm but relaxed
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The thumb wraps naturally around the stick to secure the weapon and prevent slipping.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/8/8a/Arnis_grip.jpg' width='200'>
+            `)">
+            Thumb wrapped around the stick
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>Flexible wrists allow faster strike recovery and better control during combinations.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/8/8a/Arnis_grip.jpg' width='200'>
+            `)">
+            Allow wrist flexibility for faster strikes
+        </button>
+    </li>
+
 </ul>
 
 </div>
@@ -229,11 +335,52 @@ Good defense positions the weapon to intercept attacks while preparing for count
 </p>
 
 <ul>
-<li>Inside Block</li>
-<li>Outside Block</li>
-<li>High Block</li>
-<li>Low Block</li>
-<li>Roof Block</li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Inside Block is used to deflect attacks coming toward your centerline from the inside.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/3/3d/Arnis_inside_block.jpg' width='200'>
+            `)">
+            Inside Block
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Outside Block deflects attacks coming from outside your centerline.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/4/44/Arnis_outside_block.jpg' width='200'>
+            `)">
+            Outside Block
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The High Block protects the head from overhead strikes.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/1/18/Arnis_high_block.jpg' width='200'>
+            `)">
+            High Block
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Low Block deflects strikes aimed at your torso or legs.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/2/23/Arnis_low_block.jpg' width='200'>
+            `)">
+            Low Block
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Roof Block covers diagonal attacks coming from above at an angle.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/0/0c/Arnis_roof_block.jpg' width='200'>
+            `)">
+            Roof Block
+        </button>
+    </li>
+
 </ul>
 
 <div class="video">
@@ -261,10 +408,43 @@ Proper movement is essential in Filipino Martial Arts.
 </p>
 
 <ul>
-<li>Forward Step</li>
-<li>Backward Step</li>
-<li>Side Step</li>
-<li>Triangle Step (Male and Female Triangle)</li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Forward Step helps you close distance and attack while maintaining balance.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/d/d8/Arnis_footwork.jpg' width='200'>
+            `)">
+            Forward Step
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Backward Step lets you retreat safely while keeping your stance ready for counters.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/d/d8/Arnis_footwork.jpg' width='200'>
+            `)">
+            Backward Step
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Side Step allows lateral movement to dodge attacks or create angles for strikes.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/d/d8/Arnis_footwork.jpg' width='200'>
+            `)">
+            Side Step
+        </button>
+    </li>
+
+    <li>
+        <button onclick="togglePopup(this, `
+            <p>The Triangle Step (Male & Female Triangle) creates a triangular movement pattern to control distance and angles.</p>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/d/d8/Arnis_footwork.jpg' width='200'>
+            `)">
+            Triangle Step (Male and Female Triangle)
+        </button>
+    </li>
+
 </ul>
 
 <div class="video">
@@ -280,12 +460,24 @@ allowfullscreen></iframe>
 </section>
 
 <script>
+
+
+//===========================================================================================
+const popupsMap = new WeakMap();
+let currentPopup = null;
+let currentButton = null;
+
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 
 // Full screen
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+
+
+
+
 
 // Draw base gradient
 function drawBaseGradient(){
@@ -334,6 +526,60 @@ document.addEventListener('mousemove', (e)=>{
     ctx.arc(e.clientX, e.clientY, radius, 0, Math.PI*2);
     ctx.fill();
 });
+
+
+
+//pop-up buttons
+function togglePopup(button, text) {
+    // If this button already has its popup open → close it
+    if(currentButton === button) {
+        if(currentPopup){
+            currentPopup.classList.remove('show');
+            setTimeout(() => currentPopup.remove(), 300);
+        }
+        popupsMap.delete(button);
+        currentPopup = null;
+        currentButton = null;
+        return;
+    }
+
+    // If another popup exists → close it
+    if(currentPopup){
+        currentPopup.classList.remove('show');
+        setTimeout(() => currentPopup.remove(), 300);
+        popupsMap.delete(currentButton);
+        currentPopup = null;
+        currentButton = null;
+    }
+
+    // Create new popup
+    const popup = document.createElement('div');
+    popup.classList.add('popup-small');
+    popup.innerHTML = `<strong>Info:</strong><p>${text}</p>`;
+
+    const rect = button.getBoundingClientRect();
+    popup.style.top = (rect.bottom + window.scrollY + 10) + 'px';
+    popup.style.left = (rect.left + window.scrollX) + 'px';
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => popup.classList.add('show'), 10);
+
+    // Save current popup and button
+    popupsMap.set(button, popup);
+    currentPopup = popup;
+    currentButton = button;
+}
+
+
+document.addEventListener("click", (e)=>{
+    if(currentPopup && !e.target.closest(".popup-small") && e.target.tagName !== "BUTTON"){
+        currentPopup.classList.remove('show');
+        setTimeout(() => currentPopup.remove(), 300);
+        currentPopup = null;
+    }
+});
+
 </script>
 
 <footer>
