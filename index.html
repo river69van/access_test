@@ -1,330 +1,1897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECE GEAS Comprehensive Exam Reviewer</title>
+    <!-- MathJax for LaTeX Rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --correct: #10b981;
+            --correct-bg: #ecfdf5;
+            --correct-border: #059669;
+            --wrong: #f43f5e;
+            --wrong-bg: #fff1f2;
+            --wrong-border: #e11d48;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --cream:#F7F4EF;
-  --forest:#1C3A2B;
-  --forest-mid:#2D5C42;
-  --forest-light:#EAF0EB;
-  --gold:#B8863A;
-  --ink:#1A1A18;
-  --muted:#6B6B60;
-  --border:#D8D3C9;
-  --white:#FFFFFF;
-  --red:#C0392B;
-}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);}
-.wrap{max-width:680px;margin:0 auto;padding:2rem 1.5rem;}
-.header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
-.logo{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;}
-.logo-mark{width:32px;height:32px;background:var(--forest);border-radius:6px;display:flex;align-items:center;justify-content:center;}
-.logo-mark svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;}
-.logo-name{font-family:'DM Sans',sans-serif;font-weight:500;font-size:15px;letter-spacing:.02em;color:var(--ink);}
-.logo-tag{font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-left:auto;}
-h1{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;color:var(--ink);line-height:1.15;margin-bottom:6px;}
-.sub{font-size:14px;color:var(--muted);font-weight:300;}
-.section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem;transition:border-color .2s;}
-.section:focus-within{border-color:var(--forest-mid);}
-.section-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:1rem;}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;}
-label{font-size:13px;font-weight:500;color:var(--muted);display:block;margin-bottom:5px;}
-input,select,textarea{
-  width:100%;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);
-  background:var(--cream);border:1px solid var(--border);border-radius:8px;
-  padding:9px 12px;outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none;
-}
-input:focus,select:focus,textarea:focus{border-color:var(--forest-mid);background:var(--white);}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B60' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-textarea{resize:vertical;min-height:70px;}
-.field{margin-bottom:.85rem;}
-.field:last-child{margin-bottom:0;}
-.days{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;}
-.day-btn{padding:6px 11px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:var(--cream);color:var(--muted);transition:all .15s;}
-.day-btn:hover{border-color:var(--forest-mid);color:var(--forest);}
-.day-btn.sel{background:var(--forest);border-color:var(--forest);color:#fff;font-weight:500;}
-.slot-card{border:1px solid var(--border);border-radius:8px;padding:10px 12px;cursor:pointer;background:var(--cream);transition:all .15s;display:flex;flex-direction:column;gap:4px;}
-.slot-card:hover:not(.bk){border-color:var(--forest-mid);}
-.slot-card.sel{background:var(--forest);border-color:var(--forest);}
-.slot-card.bk{cursor:default;opacity:.45;}
-.slot-time{font-size:13px;font-weight:500;color:var(--ink);}
-.slot-card.sel .slot-time,.slot-card.sel .slot-cap,.slot-card.sel .slot-bar-wrap{color:#fff;}
-.slot-cap{font-size:11px;color:var(--muted);}
-.slot-card.sel .slot-cap{color:rgba(255,255,255,.7);}
-.slot-bar-wrap{width:100%;height:4px;background:rgba(0,0,0,.1);border-radius:2px;overflow:hidden;margin-top:2px;}
-.slot-bar{height:4px;border-radius:2px;background:var(--forest-mid);transition:width .2s;}
-.slot-card.sel .slot-bar{background:#fff;}
-.slot-card.bk .slot-bar{background:#aaa;}
-.summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;}
-.summary-row:last-child{border:none;padding-bottom:0;}
-.summary-key{color:var(--muted);font-weight:300;}
-.summary-val{font-weight:500;color:var(--ink);}
-.btn-submit{width:100%;padding:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:.03em;background:var(--forest);color:#fff;border:none;border-radius:10px;cursor:pointer;transition:background .2s,transform .1s;margin-top:.25rem;}
-.btn-submit:hover{background:var(--forest-mid);}
-.btn-submit:active{transform:scale(.99);}
-.err{font-size:12px;color:var(--red);margin-top:4px;display:none;}
-.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:500;background:var(--forest-light);color:var(--forest);}
-.badge-warn{background:#FEF3CD;color:#856404;}
-.screen{display:none;}
-.screen.on{display:block;}
-.confirm-wrap{max-width:480px;margin:3rem auto;text-align:center;}
-.check{width:64px;height:64px;border-radius:50%;background:var(--forest-light);border:2px solid var(--forest);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;}
-.check svg{width:28px;height:28px;stroke:var(--forest);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
-.confirm-wrap h1{font-size:26px;margin-bottom:6px;}
-.ref{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;}
-.btn-again{padding:11px 28px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;background:transparent;border:1px solid var(--forest);color:var(--forest);border-radius:8px;cursor:pointer;transition:all .15s;margin-top:1.25rem;}
-.btn-again:hover{background:var(--forest);color:#fff;}
-.people-row{display:flex;align-items:center;gap:8px;margin-bottom:1rem;}
-.people-row label{margin:0;white-space:nowrap;}
-.stepper{display:flex;align-items:center;gap:6px;}
-.stepper button{width:30px;height:30px;border:1px solid var(--border);border-radius:6px;background:var(--cream);cursor:pointer;font-size:16px;font-family:'DM Sans',sans-serif;color:var(--ink);transition:background .15s;}
-.stepper button:hover{background:var(--forest-light);}
-.stepper span{font-size:15px;font-weight:500;min-width:24px;text-align:center;}
-.capacity-info{font-size:12px;color:var(--muted);margin-top:.35rem;}
-.member-block{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:.85rem 1rem;margin-bottom:.6rem;}
-.member-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.6rem;}
-</style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-<div id="s-book" class="screen on">
-<div class="wrap">
-  <div class="header">
-    <div class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/></svg>
-      </div>
-      <span class="logo-name">SCHEDD</span>
-      
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px 16px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: var(--card-bg);
+            padding: 20px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .quiz-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .progress-badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Question Card */
+        .quiz-card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .btn-hint {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-hint:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        /* Hint Container */
+        .hint-box {
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #92400e;
+            display: none;
+        }
+
+        /* Choices */
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .choice-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .choice-btn.selected-correct {
+            background: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #065f46 !important;
+            font-weight: 600;
+        }
+
+        .choice-btn.selected-wrong {
+            background: var(--wrong-bg) !important;
+            border-color: var(--wrong-border) !important;
+            color: #9f1239 !important;
+            font-weight: 600;
+        }
+
+        .choice-btn.reveal-correct {
+            background: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #065f46 !important;
+        }
+
+        .choice-btn:disabled {
+            cursor: default;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .explanation-box.correct-mode {
+            border-color: #a7f3d0;
+            background: #f0fdf4;
+        }
+        .explanation-box.correct-mode .explanation-title {
+            color: #047857;
+        }
+
+        .explanation-box.wrong-mode {
+            border-color: #fecdd3;
+            background: #fff1f2;
+        }
+        .explanation-box.wrong-mode .explanation-title {
+            color: #be123c;
+        }
+
+        .explanation-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        /* Navigation Controls */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: auto;
+        }
+
+        .btn-nav {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex: 1;
+            max-width: 160px;
+            text-align: center;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: var(--primary-hover);
+        }
+
+        .btn-nav:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        /* Results Screen */
+        .results-card {
+            background: var(--card-bg);
+            padding: 40px 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+            display: none;
+        }
+
+        .results-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            border: 4px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 24px auto;
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-pct {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .results-msg {
+            font-size: 1.1rem;
+            margin-bottom: 28px;
+            color: #475569;
+        }
+
+        .btn-restart {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-restart:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .question-header {
+                flex-direction: column;
+            }
+            .btn-hint {
+                align-self: flex-start;
+            }
+            .quiz-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <div class="quiz-title">ECE GEAS Comprehensive Reviewer</div>
+        <div class="progress-badge" id="progress-indicator">Item 1 of 100</div>
+    </header>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar" id="stats-bar">
+        <div class="stat-card">
+            <div class="stat-value" id="stat-score">0</div>
+            <div class="stat-label">Score</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stat-accuracy">0%</div>
+            <div class="stat-label">Accuracy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color: var(--correct);" id="stat-correct">0</div>
+            <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color: var(--wrong);" id="stat-incorrect">0</div>
+            <div class="stat-label">Incorrect</div>
+        </div>
     </div>
-    <h1>Skip the line</h1>
-    <p class="sub">Samar State University Scheduling Form</p>
-  </div>
 
-  <div class="section">
-    <div class="section-label">Service</div>
-    <div class="grid2">
-      <div class="field">
-        <label>Schedule Purpose</label>
-        <select id="svc" onchange="upd()">
-          <option>Enrollment Form</option>
-          <option>ID Verification</option>
-          <option>Test Booklet</option>
-          <option>Enrollment Fee</option>
-          <option>Miscellaneous Fees</option>
-        </select>
-      </div>
-      <div class="field">
+    <!-- Main Quiz Card -->
+    <div class="quiz-card" id="quiz-card">
+        <div class="question-header">
+            <!-- IMPORTANT: No question number inside question text! -->
+            <div class="question-text" id="question-text">Loading question...</div>
+            <button class="btn-hint" id="btn-hint" onclick="toggleHint()">Show Hint</button>
+        </div>
 
-      </div>
+        <div class="hint-box" id="hint-box"></div>
+
+        <div class="choices-container" id="choices-container"></div>
+
+        <div class="explanation-box" id="explanation-box">
+            <div class="explanation-title" id="explanation-title">Explanation</div>
+            <div class="explanation-body" id="explanation-body"></div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="btn-nav" id="btn-prev" onclick="prevQuestion()">Previous</button>
+            <button class="btn-nav" id="btn-next" onclick="nextQuestion()">Next</button>
+        </div>
     </div>
-   
 
-  
-
-
-  </div>
-
-  <div class="section">
-    <div class="section-label">Date &amp; time</div>
-    <label style="margin-bottom:8px;">Choose a date</label>
-    <div class="days" id="days"></div>
-    <label style="margin-bottom:8px;">Available slots <span id="slot-legend" style="font-size:11px;color:var(--muted);font-weight:300;text-transform:none;letter-spacing:0;margin-left:4px;">capacity shown per slot</span></label>
-    <div class="grid3" id="slots"></div>
-    <p class="err" id="err-time">Please select a time slot.</p>
-  </div>
-
-
-  <div class="section">
-    <div class="section-label">Contact &amp; notes</div>
-    <div class="grid2">
-      <div class="field"><label>Contact first name</label><input type="text" id="fname" placeholder="Imyrson"><p class="err" id="err-fname">Required.</p></div>
-      <div class="field"><label>Contact last name</label><input type="text" id="lname" placeholder="rivera"><p class="err" id="err-lname">Required.</p></div>
+    <!-- Results Screen -->
+    <div class="results-card" id="results-card">
+        <div class="results-title">Quiz Completed!</div>
+        <div class="score-circle">
+            <div class="score-num" id="final-score">0/100</div>
+            <div class="score-pct" id="final-pct">0%</div>
+        </div>
+        <div class="results-msg" id="final-msg">Great effort! Keep practicing to master ECE GEAS.</div>
+        <button class="btn-restart" onclick="restartQuiz()">Restart Reviewer</button>
     </div>
-    <div class="field"><label>Email address</label><input type="email" id="email" placeholder="imyrson@example.com"><p class="err" id="err-email">Enter a valid email.</p></div>
-    <div class="field"><label>Phone <span style="font-weight:300;color:var(--muted)">(optional)</span></label><input type="tel" id="phone" placeholder="nim num"></div>
-    <div class="field"><label>Notes <span style="font-weight:300;color:var(--muted)">(optional)</span></label><textarea id="notes" placeholder="mga reklamo"></textarea></div>
-  </div>
 
-  <div class="section">
-    <div class="section-label">Summary</div>
-    <div id="summary"></div>
-  </div>
-
-  <button class="btn-submit" onclick="submit()">Confirm Schedule</button>
+    <!-- Footer -->
+    <footer>Created by K.</footer>
 </div>
-</div>
-
-<div id="s-confirm" class="screen">
-<div class="wrap">
-  <div class="confirm-wrap">
-    <div class="check">
-      <svg viewBox="0 0 24 24"><polyline points="4 12 9 17 20 7"/></svg>
-    </div>
-    <h1>Schedule Confirmed</h1>
-    <p class="ref">Ref #<span id="conf-ref"></span></p>
-    <div class="section" style="text-align:left;">
-      <div id="conf-rows"></div>
-    </div>
-    <p style="font-size:13px;color:var(--muted);margin-top:1rem;">Confirmation sent to <strong id="conf-email" style="color:var(--ink);font-weight:500;"></strong></p>
-    <p style="font-size:12px;color:var(--muted);margin-top:.5rem;">Share the reference number.</p>
-    <button class="btn-again" onclick="again()">Book another slot</button>
-    <button class="btn-submit" onclick="downloadPDF()" style="margin-top:10px;">
-        Download PDF
-    </button>
-  </div>
-</div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-const SLOT_CAPACITY = 10;
-const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
-const SLOTS = ['8:00 AM','8:30 AM','9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','1:00 PM','1:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM'];
-const TAKEN = {
-  'Mon':{'8:00 AM':10,'9:00 AM':7,'10:30 AM':4,'2:00 PM':9,'3:30 PM':10},
-  'Tue':{'8:30 AM':10,'10:00 AM':6,'1:30 PM':3},
-  'Wed':{'9:30 AM':10,'11:00 AM':8,'2:30 PM':5,'3:00 PM':10},
-  'Thu':{'8:00 AM':2,'9:00 AM':10,'1:00 PM':7},
-  'Fri':{'10:00 AM':10,'2:00 PM':4,'3:30 PM':10}
-};
+// Comprehensive database of all 100 items extracted directly from source material
+const rawQuestionsData = [
+  {
+    q: "Which of the following best distinguishes crystalline materials from non-crystalline materials?",
+    choices: [
+      "Ability to conduct electricity",
+      "Presence of metal atoms",
+      "Long-range atomic order",
+      "Ability to melt"
+    ],
+    correctText: "Long-range atomic order",
+    hint: "Think about the periodic, repeating arrangement of atoms across large distance scales.",
+    explanation: "<strong>Concept:</strong> Crystalline materials are characterized by long-range atomic order (a periodic, repeating 3D lattice structure), whereas non-crystalline (amorphous) materials lack long-range periodic atomic order.<br><strong>Exam Tip:</strong> Long-range order gives crystalline solids sharp, well-defined melting points."
+  },
+  {
+    q: "A very light object and a very heavy object have the same momentum. Which has more kinetic energy?",
+    choices: [
+      "Can't say because the densities of two objects are not known",
+      "The heavy object",
+      "Both have the same since momentum is the same",
+      "The light object"
+    ],
+    correctText: "The light object",
+    hint: "Recall the relationship between kinetic energy and momentum: $KE = \\frac{p^2}{2m}$.",
+    explanation: "<strong>Formula:</strong> $KE = \\frac{p^2}{2m}$.<br><strong>Reasoning:</strong> Since momentum $p$ is constant for both objects, kinetic energy $KE$ is inversely proportional to mass $m$ ($KE \\propto \\frac{1}{m}$). The lighter object (smaller $m$) has greater kinetic energy."
+  },
+  {
+    q: "Excel Review Center offers review classes to aspiring engineering licensure examinees through face-to-face and online instruction in exchange for tuition fees. Which business model best describes its primary operation?",
+    choices: [
+      "Service-Based Business Model",
+      "Franchise Model",
+      "Brokerage (Marketplace) Model",
+      "Advertising-Based Business Model"
+    ],
+    correctText: "Service-Based Business Model",
+    hint: "The business delivers educational expertise and instruction in exchange for a fee rather than selling physical goods.",
+    explanation: "<strong>Concept:</strong> Educational review centers operate on a Service-Based Business Model, providing professional instruction and educational services in exchange for tuition fees."
+  },
+  {
+    q: "What is the effect of increasing temperature on diffusion in solids?",
+    choices: [
+      "It increases diffusion rate",
+      "It decreases diffusion rate",
+      "It changes the direction of diffusion",
+      "It has no effect"
+    ],
+    correctText: "It increases diffusion rate",
+    hint: "Consider the Arrhenius equation for diffusion coefficient $D = D_0 e^{-Q_d / RT}$.",
+    explanation: "<strong>Formula:</strong> $D = D_0 e^{-Q_d / RT}$.<br><strong>Reasoning:</strong> Higher temperatures increase thermal energy and atomic vibration, allowing atoms to overcome the activation energy barrier $Q_d$ and jump between lattice sites faster."
+  },
+  {
+    q: "Which color code on a chemical hazard diamond represents health hazard under NFPA (National Fire Protection Association)?",
+    choices: [
+      "White",
+      "Yellow",
+      "Blue",
+      "Red"
+    ],
+    correctText: "Blue",
+    hint: "NFPA 704 standard uses 4 colors: Red (Flammability), Yellow (Instability/Reactivity), White (Special hazards), and one remaining color for Health.",
+    explanation: "<strong>NFPA 704 Standard:</strong><br>• <strong>Blue:</strong> Health hazard<br>• <strong>Red:</strong> Flammability hazard<br>• <strong>Yellow:</strong> Instability / Reactivity hazard<br>• <strong>White:</strong> Special notice (e.g., W, OX, SA)"
+  },
+  {
+    q: "Which factor does not affect the properties of a polymer?",
+    choices: [
+      "Degree of polymerization",
+      "Chain branching and crosslinking",
+      "Structure of the monomer",
+      "Isotopic mass of hydrogen"
+    ],
+    correctText: "Isotopic mass of hydrogen",
+    hint: "Polymer physical and mechanical properties depend on chemical structure, chain length, and bonding, not microscopic nuclear isotopes.",
+    explanation: "<strong>Concept:</strong> Polymer properties are governed by monomer structure, molecular weight (degree of polymerization), branching, and crosslinking. Isotopic mass differences of hydrogen have negligible effect on macromolecular polymer properties."
+  },
+  {
+    q: "A company has a current ratio of 1.2 and a quick ratio of 0.8. What does this imply?",
+    choices: [
+      "The company's inventory is lower than receivables",
+      "The company has excessive inventories",
+      "The company is very liquid",
+      "The company's current liabilities exceed its current assets"
+    ],
+    correctText: "The company has excessive inventories",
+    hint: "Current Ratio = $\\frac{\\text{Current Assets}}{\\text{Current Liabilities}}$, Quick Ratio = $\\frac{\\text{Current Assets} - \\text{Inventory}}{\\text{Current Liabilities}}$.",
+    explanation: "<strong>Formula:</strong> $\\text{Current Ratio} - \\text{Quick Ratio} = \\frac{\\text{Inventory}}{\\text{Current Liabilities}} = 1.2 - 0.8 = 0.4$.<br><strong>Reasoning:</strong> A significant gap between current ratio and quick ratio indicates that inventory represents a major fraction of current assets, pointing to excessive inventory reliance or slow-moving stock."
+  },
+  {
+    q: "Which of the following explains the thermal conductivity of metals?",
+    choices: [
+      "Motion of delocalized electrons",
+      "Exchange of photons",
+      "Movement of protons",
+      "Vibration of nuclei only"
+    ],
+    correctText: "Motion of delocalized electrons",
+    hint: "Metals possess a 'sea of free electrons' that efficiently transport thermal and electrical energy.",
+    explanation: "<strong>Concept:</strong> Thermal conductivity in metals is primarily driven by free/delocalized conduction electrons moving rapidly through the crystal lattice (Wiedemann-Franz Law)."
+  },
+  {
+    q: "Three identical resistors are connected in series to a battery. If one resistor is removed and replaced by a wire, what happens to the current in the circuit?",
+    choices: [
+      "It remains the same.",
+      "It decreases.",
+      "It becomes zero.",
+      "It increases."
+    ],
+    correctText: "It increases.",
+    hint: "Replacing a resistor with a wire reduces total equivalent resistance $R_{eq}$. Apply Ohm's Law $I = \\frac{V}{R_{eq}}$.",
+    explanation: "<strong>Calculation:</strong> Initially $R_{eq1} = 3R \\implies I_1 = \\frac{V}{3R}$. After replacing one with a wire, $R_{eq2} = 2R \\implies I_2 = \\frac{V}{2R}$.<br><strong>Conclusion:</strong> Since resistance decreased from $3R$ to $2R$, current increases by 50%."
+  },
+  {
+    q: "What is the minimum punishment imposed to any person who shall give any false or fraudulent statement to the Board to obtain a Certificate of Registration and/or Professional ID Card as Electronic Engineer?",
+    choices: [
+      "₱50,000 or imprisonment of 6 months",
+      "₱10,000 or imprisonment of 3 months",
+      "₱100,000 or imprisonment of 6 months",
+      "₱100,000 or imprisonment of 1 year"
+    ],
+    correctText: "₱100,000 or imprisonment of 6 months",
+    hint: "Check Section 35 (Penal Provision) of RA 9292 regarding minimum fine and minimum imprisonment.",
+    explanation: "<strong>RA 9292 Sec. 35:</strong> Any person who provides fraudulent statements to obtain registration shall be punished with a fine of not less than ₱100,000 nor more than ₱1,000,000, or imprisonment of not less than 6 months nor more than 6 years, or both."
+  },
+  {
+    q: "A reversible heat engine operates between 600 K and 300 K. What is its maximum possible efficiency?",
+    choices: [
+      "100%",
+      "25%",
+      "75%",
+      "50%"
+    ],
+    correctText: "50%",
+    hint: "Use Carnot efficiency formula $\\eta_{max} = 1 - \\frac{T_C}{T_H}$.",
+    explanation: "<strong>Formula:</strong> $\\eta_{max} = 1 - \\frac{T_C}{T_H} = 1 - \\frac{300}{600} = 1 - 0.50 = 0.50 = 50\\%$."
+  },
+  {
+    q: "Why is discounted decision tree analysis useful in engineering economy?",
+    choices: [
+      "It evaluates outcomes while ignoring probability estimates.",
+      "It evaluates risky decisions while accounting for the time value of money.",
+      "It evaluates choices without considering uncertainty.",
+      "It evaluates financial choices only in terms of immediate present values without considering long-term risks."
+    ],
+    correctText: "It evaluates risky decisions while accounting for the time value of money.",
+    hint: "Discounted decision trees combine decision-tree probabilities with net present value calculations.",
+    explanation: "<strong>Concept:</strong> Discounted decision tree analysis models sequential decision alternatives under uncertainty/risk while discounting future cash flows to account for the time value of money."
+  },
+  {
+    q: "Why do ceramics typically have low thermal expansion compared to metals?",
+    choices: [
+      "Their weak bond strength allows limited expansion",
+      "Their atomic strength arrangement prevents free movement",
+      "Their surface strength contains lubricating compounds",
+      "Their strong ionic/covalent bonds restrict atomic vibration"
+    ],
+    correctText: "Their strong ionic/covalent bonds restrict atomic vibration",
+    hint: "Deeper potential energy wells associated with strong chemical bonding restrict interatomic separation upon heating.",
+    explanation: "<strong>Concept:</strong> Ceramics contain strong ionic and covalent bonds with deep potential energy wells. Thermal energy causes less amplitude of atomic vibration compared to metallic bonds, leading to lower thermal expansion."
+  },
+  {
+    q: "An electronics company introduces standardized work procedures to ensure that every product meets the same specifications. Which operations objective is primarily addressed?",
+    choices: [
+      "Enhancing production efficiency through uniform operating standards",
+      "Quality consistency",
+      "Improving customer satisfaction through reliable product performance",
+      "Strengthening competitive advantage through consistent manufacturing practices"
+    ],
+    correctText: "Quality consistency",
+    hint: "Standardized operating procedures are designed to minimize variability in output.",
+    explanation: "<strong>Concept:</strong> Standardization in manufacturing reduces process variation, ensuring that every unit produced adheres strictly to specifications, directly achieving Quality Consistency."
+  },
+  {
+    q: "Which surface will cool down fastest via radiation, assuming identical temperatures?",
+    choices: [
+      "Black and rough",
+      "White and shiny",
+      "Transparent glass",
+      "Polished aluminum"
+    ],
+    correctText: "Black and rough",
+    hint: "Kirchhoff's Law of Thermal Radiation: Good absorbers are good emitters ($\ mepsilon \\approx 1$).",
+    explanation: "<strong>Concept:</strong> According to Kirchhoff's Law, a surface with high emissivity $\\varepsilon$ absorbs and radiates thermal energy most effectively. A black, rough surface approaches ideal blackbody behavior ($\ mepsilon \\approx 1$), cooling fastest via radiation."
+  },
+  {
+    q: "In object-oriented analysis and design, what does the principle of low coupling signify?",
+    choices: [
+      "A class has minimal dependencies and interacts loosely with others",
+      "A class relies heavily on shared global variables for communication",
+      "A class is defined exclusively as an abstract base for inheritance",
+      "A class maintains strong dependence on other related classes"
+    ],
+    correctText: "A class has minimal dependencies and interacts loosely with others",
+    hint: "Low coupling encourages modular design where changes in one class do not impact other classes.",
+    explanation: "<strong>Concept:</strong> Coupling measures interdependency between software modules. Low coupling means classes have minimal dependencies on each other, making systems easier to maintain, test, and reuse."
+  },
+  {
+    q: "Which of the following is a key reason why nanomaterials often have lower melting points compared to their bulk counterparts?",
+    choices: [
+      "Increased grain boundary strength",
+      "Reduced atomic mass",
+      "Higher surface-to-volume ratio",
+      "Higher electrical conductivity"
+    ],
+    correctText: "Higher surface-to-volume ratio",
+    hint: "At nanoscale dimensions, a high fraction of atoms reside at the surface where coordination numbers are lower.",
+    explanation: "<strong>Concept:</strong> Nanomaterials have a very high surface-to-volume ratio. Surface atoms have fewer neighbor bonds (lower coordination number) and higher surface energy, making them easier to break and causing melting point depression."
+  },
+  {
+    q: "Which Philippine law strengthened occupational safety and health standards in workplaces?",
+    choices: [
+      "Republic Act No. 9003",
+      "Republic Act No. 8749",
+      "Republic Act No. 11058",
+      "Republic Act No. 9292"
+    ],
+    correctText: "Republic Act No. 11058",
+    hint: "This act mandates compliance with safety standards and penalizes OSH violations in Philippine workplaces.",
+    explanation: "<strong>Legal Context:</strong> Republic Act No. 11058 is titled 'An Act Strengthening Compliance with Occupational Safety and Health Standards and Providing Penalties for Violations Thereof'."
+  },
+  {
+    q: "Which of the following best describes a thermoplastic polymer?",
+    choices: [
+      "Softens when heated and can be reshaped",
+      "Retains compressive strength due to cross-linking",
+      "Becomes permanently strong after molding",
+      "Exhibits high tensile strength when reheated"
+    ],
+    correctText: "Softens when heated and can be reshaped",
+    hint: "Thermoplastics consist of linear/branched chains joined by weak secondary bonds (van der Waals) that melt repeatably.",
+    explanation: "<strong>Concept:</strong> Thermoplastics melt into a liquid when heated and freeze to a brittle, glassy state when cooled sufficiently. This reversible process allows them to be repeatedly reshaped, unlike thermosets."
+  },
+  {
+    q: "Which CAD feature allows a designer to reuse frequently used components such as symbols or standard parts?",
+    choices: [
+      "Macros only",
+      "Clipboard",
+      "Blocks",
+      "Task Manager"
+    ],
+    correctText: "Blocks",
+    hint: "This feature groups objects into a single named drawing entity for repetitive insertion.",
+    explanation: "<strong>Concept:</strong> In CAD software (e.g., AutoCAD), 'Blocks' are named collections of geometries treated as a single object, allowing quick reuse of standardized symbols and component parts."
+  },
+  {
+    q: "Which statement best describes the External Rate of Return (ERR) method?",
+    choices: [
+      "It assumes interim cash flows are reinvested at an external rate, usually the MARR.",
+      "It assumes interim cash flows are reinvested at the IRR.",
+      "It assumes interim cash flows are reinvested at the company's average cost of capital.",
+      "It assumes interim cash flows are reinvested at a constant external discount rate."
+    ],
+    correctText: "It assumes interim cash flows are reinvested at an external rate, usually the MARR.",
+    hint: "Unlike IRR which assumes reinvestment at the internal rate, ERR explicitly assumes reinvestment at the MARR.",
+    explanation: "<strong>Engineering Economy:</strong> The External Rate of Return (ERR) addresses the unrealistic reinvestment rate assumption of IRR by assuming that positive cash flows generated during project life are reinvested at the company's Minimum Acceptable Rate of Return (MARR)."
+  },
+  {
+    q: "A company discovers that customer acquisition costs are increasing faster than customer lifetime value. Which conclusion is most appropriate?",
+    choices: [
+      "The business model is becoming more stable and predictable",
+      "The business model may become financially unsustainable",
+      "Market demand will continue to expand regardless of rising costs",
+      "Revenue growth will occur automatically without further adjustments"
+    ],
+    correctText: "The business model may become financially unsustainable",
+    hint: "For a sustainable business, Customer Lifetime Value (LTV) must exceed Customer Acquisition Cost (CAC).",
+    explanation: "<strong>Business Concept:</strong> When CAC > LTV (or CAC grows faster than LTV), the business loses money on every new customer added, rendering the business model financially unsustainable."
+  },
+  {
+    q: "What is otherwise known as \"PRC modernization law\"?",
+    choices: [
+      "R. A. 8981",
+      "R. A. 8198",
+      "R. A. 8891",
+      "R. A. 8918"
+    ],
+    correctText: "R. A. 8981",
+    hint: "Passed in December 2000 to modernize the Professional Regulation Commission.",
+    explanation: "<strong>Legal Context:</strong> Republic Act No. 8981 is officially titled the 'PRC Modernization Act of 2000'."
+  },
+  {
+    q: "Which particle-like excitations describe lattice vibrations in a crystal?",
+    choices: [
+      "Electrons",
+      "Phonons",
+      "Photons",
+      "Magnons"
+    ],
+    correctText: "Phonons",
+    hint: "These are quantized vibrational energy modes propagating through a crystal structure.",
+    explanation: "<strong>Concept:</strong> A phonon is a quasiparticle/quantized mode of vibration occurring in a rigid crystal lattice, governing thermal conductivity and sound propagation in solids."
+  },
+  {
+    q: "Which Philippine law is known as the Clean Water Act?",
+    choices: [
+      "Republic Act 9003",
+      "Republic Act 8749",
+      "Presidential Decree 1586",
+      "Republic Act 9275"
+    ],
+    correctText: "Republic Act 9275",
+    hint: "RA 9003 is Ecological Solid Waste, RA 8749 is Clean Air Act. Identify the Clean Water law.",
+    explanation: "<strong>Legal Context:</strong> Republic Act No. 9275 is known as the 'Philippine Clean Water Act of 2004'."
+  },
+  {
+    q: "What does the Contingency Theory of Management state?",
+    choices: [
+      "Management principles are universally applicable",
+      "One best way to manage all situations",
+      "Managerial decisions should depend on the situation",
+      "Organizations should focus only on internal factors"
+    ],
+    correctText: "Managerial decisions should depend on the situation",
+    hint: "Contingency implies 'it depends on external and internal contextual factors'.",
+    explanation: "<strong>Management Theory:</strong> Contingency theory claims that there is no single best way to organize a corporation or lead a company. Instead, optimal leadership and managerial actions depend (are contingent) upon internal and external situations."
+  },
+  {
+    q: "If the radius of gyration of a body about an axis is doubled, its moment of inertia becomes:",
+    choices: [
+      "Double",
+      "Four times",
+      "Half",
+      "Remains unchanged"
+    ],
+    correctText: "Four times",
+    hint: "Moment of inertia $I = m k^2$, where $k$ is radius of gyration.",
+    explanation: "<strong>Formula:</strong> $I = m k^2$.<br><strong>Calculation:</strong> If $k' = 2k$, then $I' = m(2k)^2 = 4 m k^2 = 4I$. Thus, moment of inertia increases by four times."
+  },
+  {
+    q: "According to Bernoulli's principle, as the velocity of an ideal fluid increases, its:",
+    choices: [
+      "Viscosity increases",
+      "Density increases",
+      "Pressure decreases",
+      "Pressure increases"
+    ],
+    correctText: "Pressure decreases",
+    hint: "Bernoulli equation along a streamline: $P + \\frac{1}{2}\\rho v^2 + \\rho g h = \\text{constant}$.",
+    explanation: "<strong>Formula:</strong> $P + \\frac{1}{2}\\rho v^2 + \\rho g h = C$.<br><strong>Reasoning:</strong> Assuming constant elevation $h$, an increase in fluid velocity $v$ results in a corresponding decrease in static pressure $P$ to conserve total mechanical energy."
+  },
+  {
+    q: "Which of the following is a major consequence of habitat fragmentation?",
+    choices: [
+      "Increased gene flow and interaction between previously isolated populations",
+      "Expansion of species populations and improved ecosystem stability across regions",
+      "Enhanced migration and movement of animals across fragmented landscapes and habitats",
+      "Isolation of species leading to decreased genetic diversity and population decline"
+    ],
+    correctText: "Isolation of species leading to decreased genetic diversity and population decline",
+    hint: "Fragmentation divides large continuous habitats into smaller, isolated patches.",
+    explanation: "<strong>Environmental Science:</strong> Habitat fragmentation restricts animal movement, fragments breeding pools, restricts gene flow, and causes inbreeding depression, leading to lower genetic diversity and increased extinction risk."
+  },
+  {
+    q: "An engineer chooses the alternative with the highest Internal Rate of Return (IRR), but its IRR is still below the company's MARR. What should be done?",
+    choices: [
+      "Accept because it has the highest IRR.",
+      "Ignore the MARR.",
+      "Reject the project.",
+      "Accept the project."
+    ],
+    correctText: "Reject the project.",
+    hint: "Any project with IRR < MARR fails to earn the minimum required rate of return.",
+    explanation: "<strong>Engineering Economy:</strong> A project is economically feasible only if its IRR $\\ge$ MARR. Even if a project has the best IRR among alternatives, if IRR < MARR, it yields inadequate return and must be rejected (or the 'Do Nothing' option selected)."
+  },
+  {
+    q: "A processor runs 5 billion instructions with an average CPI of 2 on a 2 GHz clock. What is the total execution time?",
+    choices: [
+      "5 seconds",
+      "10 seconds",
+      "2 seconds",
+      "20 seconds"
+    ],
+    correctText: "5 seconds",
+    hint: "Execution Time $T = \\frac{\\text{Instruction Count} \\times \\text{CPI}}{\\text{Clock Rate}}$.",
+    explanation: "<strong>Calculation:</strong><br>$T = \\frac{5 \\times 10^9 \\text{ instructions} \\times 2 \\text{ cycles/instruction}}{2 \\times 10^9 \\text{ cycles/sec}} = \\frac{10 \\times 10^9}{2 \\times 10^9} = 5 \\text{ seconds}$."
+  },
+  {
+    q: "Which property best distinguishes a crystalline solid from an amorphous solid?",
+    choices: [
+      "Crystalline solids are always transparent.",
+      "Amorphous solids have a higher melting point than crystalline solids.",
+      "Crystalline solids have a regular, repeating atomic arrangement",
+      "Amorphous solids conduct electricity better."
+    ],
+    correctText: "Crystalline solids have a regular, repeating atomic arrangement",
+    hint: "Focus on the 3D atomic arrangement symmetry.",
+    explanation: "<strong>Concept:</strong> Crystalline solids possess long-range periodic translational symmetry (regular repeating atomic lattice), whereas amorphous solids lack this structural periodicity."
+  },
+  {
+    q: "A company concludes that favorable government policies, low inflation, changing consumer preferences, and rapid digital innovation will significantly affect its future strategy. Which statement best describes this conclusion?",
+    choices: [
+      "The company relied mainly on industry trends without full strategic review.",
+      "The company emphasized environmental scanning but neglected organizational strengths.",
+      "The company integrated all four dimensions of PEST analysis into strategic planning.",
+      "The company considered external conditions but ignored internal analysis."
+    ],
+    correctText: "The company integrated all four dimensions of PEST analysis into strategic planning.",
+    hint: "PEST = Political (gov policies), Economic (inflation), Social (consumer preferences), Technological (digital innovation).",
+    explanation: "<strong>Strategic Management:</strong> The factors listed map directly to the four components of PEST analysis: Political, Economic, Social, and Technological external environment forces."
+  },
+  {
+    q: "A projectile is launched at 40 m/s at an angle of 30°. What is its horizontal range?",
+    choices: [
+      "141 m",
+      "101 m",
+      "81 m",
+      "121 m"
+    ],
+    correctText: "141 m",
+    hint: "Range $R = \\frac{v_0^2 \\sin(2\\theta)}{g}$. Assume $g = 9.81 \\text{ m/s}^2$.",
+    explanation: "<strong>Formula & Calculation:</strong><br>$R = \\frac{(40)^2 \\sin(2 \\times 30^\\circ)}{9.81} = \\frac{1600 \\times \\sin(60^\\circ)}{9.81} = \\frac{1600 \\times 0.866025}{9.81} = \\frac{1385.64}{9.81} \\approx 141.25 \\text{ m} \\approx 141 \\text{ m}$."
+  },
+  {
+    q: "In workplace safety regulations, the acronym PPE is a critical requirement. What does PPE specifically stand for?",
+    choices: [
+      "Personal Protective Equipment",
+      "Professional Process Engineering",
+      "Public Protection Equipment",
+      "Portable Power Equipment"
+    ],
+    correctText: "Personal Protective Equipment",
+    hint: "Includes hard hats, safety glasses, gloves, and protective suits.",
+    explanation: "<strong>Safety Standard:</strong> PPE stands for Personal Protective Equipment, worn to minimize exposure to hazards that cause serious workplace injuries and illnesses."
+  },
+  {
+    q: "What distinguishes renewable natural resources from non-renewable ones?",
+    choices: [
+      "Non-renewable resources are not typically replenished within ecosystems or natural cycles",
+      "Non-renewable resources are always more expensive and difficult to extract efficiently",
+      "Renewable resources can regenerate naturally within a human lifespan and sustain long-term use",
+      "Renewable resources are synthetic materials produced through industrial processes"
+    ],
+    correctText: "Renewable resources can regenerate naturally within a human lifespan and sustain long-term use",
+    hint: "Consider the timescale required for natural replenishment.",
+    explanation: "<strong>Environmental Science:</strong> Renewable resources naturally replenish or regenerate rapidly enough (within human time scales) to maintain sustainable supply levels."
+  },
+  {
+    q: "Which Philippine law primarily promotes interconnection among public telecommunications entities to encourage competition and improve public service?",
+    choices: [
+      "Republic Act No. 7925",
+      "Republic Act No. 8792",
+      "Republic Act No. 10173",
+      "Republic Act No. 9292"
+    ],
+    correctText: "Republic Act No. 7925",
+    hint: "Known as the Public Telecommunications Policy Act of the Philippines.",
+    explanation: "<strong>Legal Context:</strong> Republic Act No. 7925 (Public Telecommunications Policy Act of the Philippines) mandates compulsory interconnection between networks to promote competition and expand telecommunication access."
+  },
+  {
+    q: "Why is differentiation important in a value proposition?",
+    choices: [
+      "It allows competitors to imitate your solution more easily",
+      "It may confuse customers when evaluating available choices",
+      "It helps customers understand why your solution is better or unique",
+      "It can increase product complexity without adding meaningful benefits"
+    ],
+    correctText: "It helps customers understand why your solution is better or unique",
+    hint: "Differentiation highlights distinct advantages over market alternatives.",
+    explanation: "<strong>Marketing Concept:</strong> A strong value proposition uses differentiation to clearly articulate why a product or service offers superior value or solves a problem better than competing alternatives."
+  },
+  {
+    q: "A species whose impact on the ecosystem is disproportionately large compared to its abundance is known as a:",
+    choices: [
+      "Invasive species",
+      "Keystone species",
+      "Dominant species",
+      "Indicator species"
+    ],
+    correctText: "Keystone species",
+    hint: "Removing this key species drastically alters or collapses the entire ecosystem structure (e.g., sea otters, wolves).",
+    explanation: "<strong>Ecology Concept:</strong> A keystone species exerts strong control on community structure and biodiversity despite having relatively low total population biomass."
+  },
+  {
+    q: "At the equilibrium position of a mass-spring system, the energy is entirely:",
+    choices: [
+      "Kinetic energy",
+      "Elastic energy",
+      "Thermal energy",
+      "Potential energy"
+    ],
+    correctText: "Kinetic energy",
+    hint: "At $x = 0$, displacement is zero, so elastic potential energy $U = \\frac{1}{2}kx^2 = 0$, while speed $v$ is maximum.",
+    explanation: "<strong>Physics Concept:</strong> At the equilibrium position ($x=0$), spring potential energy is zero ($U=0$), and object velocity reaches its maximum ($v = v_{max}$). Hence total energy is entirely kinetic $KE = \\frac{1}{2}m v_{max}^2$."
+  },
+  {
+    q: "In legal term, what does the term \"motu propio\" mean?",
+    choices: [
+      "By collective agreement or majority vote of a body",
+      "By one's own initiative or decision without external prompting",
+      "By authority of another or upon formal request",
+      "By recommendation or instruction of a superior"
+    ],
+    correctText: "By one's own initiative or decision without external prompting",
+    hint: "Latin phrase used when an official body acts on its own accord without needing a formal motion or complaint.",
+    explanation: "<strong>Legal Terminology:</strong> 'Motu proprio' is Latin for 'on one's own initiative'. It describes an official act taken by a court, board, or authority without a prior motion from an outside party."
+  },
+  {
+    q: "A disc of radius 0.2 m rotates at 10 rad/s. What is the linear speed of a point on its rim?",
+    choices: [
+      "4.0 m/s",
+      "2.0 m/s",
+      "3.0 m/s",
+      "1.0 m/s"
+    ],
+    correctText: "2.0 m/s",
+    hint: "Tangential linear speed $v = r \\omega$.",
+    explanation: "<strong>Formula & Calculation:</strong><br>$v = r \\times \\omega = 0.2 \\text{ m} \\times 10 \\text{ rad/s} = 2.0 \\text{ m/s}$."
+  },
+  {
+    q: "Which of the following statements is true about methane (CH4) as a greenhouse gas?",
+    choices: [
+      "It is less potent than CO2 but lasts longer in the atmosphere",
+      "It is more potent than CO2 but lasts for a shorter time",
+      "It is not a greenhouse gas",
+      "It contributes to ozone depletion directly"
+    ],
+    correctText: "It is more potent than CO2 but lasts for a shorter time",
+    hint: "Methane has a much higher Global Warming Potential (GWP ~28-36x) than $CO_2$, but an atmospheric lifetime of ~12 years compared to centuries for $CO_2$.",
+    explanation: "<strong>Environmental Chemistry:</strong> $CH_4$ traps significantly more heat per molecule than $CO_2$ (making it more potent), but breaks down in the atmosphere much faster (~12 years vs. 100+ years)."
+  },
+  {
+    q: "A 2-kg object moves in a circle of radius 4 m at a speed of 8 m/s. What is the required centripetal force?",
+    choices: [
+      "16 N",
+      "64 N",
+      "24 N",
+      "32 N"
+    ],
+    correctText: "32 N",
+    hint: "Centripetal force $F_c = \\frac{m v^2}{r}$.",
+    explanation: "<strong>Formula & Calculation:</strong><br>$F_c = \\frac{m v^2}{r} = \\frac{2 \\text{ kg} \\times (8 \\text{ m/s})^2}{4 \\text{ m}} = \\frac{2 \\times 64}{4} = \\frac{128}{4} = 32 \\text{ N}$."
+  },
+  {
+    q: "Which statement best distinguishes crystalline materials from amorphous materials?",
+    choices: [
+      "Amorphous materials conduct electricity better.",
+      "Crystalline materials have randomly arranged atoms.",
+      "Amorphous materials have a repeating lattice structure.",
+      "Crystalline materials possess long-range atomic order."
+    ],
+    correctText: "Crystalline materials possess long-range atomic order.",
+    hint: "Look for the key structural definition of periodicity in crystals.",
+    explanation: "<strong>Materials Science:</strong> Crystalline solids feature long-range atomic order (periodic 3D spatial arrangement), whereas amorphous solids possess only short-range atomic order."
+  },
+  {
+    q: "Which of the following quantities is dimensionless?",
+    choices: [
+      "Bulk modulus",
+      "Young's modulus",
+      "Poisson's ratio",
+      "Shear modulus"
+    ],
+    correctText: "Poisson's ratio",
+    hint: "Poisson's ratio $\\nu = -\\frac{\\text{lateral strain}}{\\text{axial strain}}$. Strain is unitless.",
+    explanation: "<strong>Concept:</strong> Moduli of elasticity (Young's, Bulk, Shear) have units of pressure (Pascal or $\\text{N/m}^2$). Poisson's ratio is the ratio of two strain values (strain / strain), making it a dimensionless quantity."
+  },
+  {
+    q: "Which of the following is an adverse effect of acid rain?",
+    choices: [
+      "Corrosion and deterioration of buildings and monuments",
+      "All of the choices",
+      "Damage to soil nutrients and vegetation reducing crop yield",
+      "Acidification of lakes and streams harming aquatic life"
+    ],
+    correctText: "All of the choices",
+    hint: "Acid rain ($\ meq$ $H_2SO_4$, $HNO_3$) damages infrastructure, soil chemistry, and aquatic ecosystems.",
+    explanation: "<strong>Environmental Effects:</strong> Acid deposition leaches soil nutrients, acidifies surface waters killing aquatic flora/fauna, and dissolves limestone/metals in buildings, causing all listed adverse effects."
+  },
+  {
+    q: "What is the main reason for using functions in programming?",
+    choices: [
+      "To organize, reuse, and manage program code more effectively",
+      "To make program code longer and more complex for execution",
+      "To create interactive graphics and visual program elements",
+      "To store and manipulate arrays within program structures"
+    ],
+    correctText: "To organize, reuse, and manage program code more effectively",
+    hint: "Functions adhere to the DRY ('Don't Repeat Yourself') software engineering principle.",
+    explanation: "<strong>Software Development:</strong> Functions modularize code, allowing logic to be executed repeatedly without duplication, simplifying debugging, maintenance, and organization."
+  },
+  {
+    q: "Which of the following is a common GUI framework for desktop applications in Python?",
+    choices: [
+      "Django",
+      "Flask",
+      "Tkinter",
+      "React"
+    ],
+    correctText: "Tkinter",
+    hint: "Django and Flask are web backends; React is JS frontend; Tkinter is Python's standard desktop GUI package.",
+    explanation: "<strong>Computer Science:</strong> Tkinter is Python's standard built-in library for creating graphical user interface (GUI) desktop applications."
+  },
+  {
+    q: "A radioactive sample has a half-life of 5 hours. After 15 hours, what fraction remains?",
+    choices: [
+      "1/16",
+      "1/8",
+      "1/2",
+      "1/4"
+    ],
+    correctText: "1/8",
+    hint: "Number of half-lives $n = \\frac{t}{t_{1/2}} = \\frac{15}{5} = 3$. Remaining fraction = $\\left(\\frac{1}{2}\\right)^n$.",
+    explanation: "<strong>Formula & Calculation:</strong><br>$n = \\frac{15}{5} = 3$ half-lives.<br>$\\text{Fraction remaining} = \\left(\\frac{1}{2}\\right)^3 = \\frac{1}{8}$."
+  },
+  {
+    q: "A company identifies increasing demand for electric vehicles and decides to develop charging stations. This decision is an example of:",
+    choices: [
+      "Implementing a long-term strategic initiative for growth",
+      "Exploiting an opportunity",
+      "Eliminating a weakness",
+      "Addressing a potential external threat in the market"
+    ],
+    correctText: "Exploiting an opportunity",
+    hint: "In SWOT analysis, external market trends that can be leveraged for growth represent Opportunities.",
+    explanation: "<strong>Strategic Management:</strong> Rising market demand for EVs is an external favorable trend. Capitalizing on it by establishing charging stations is an example of exploiting a market opportunity."
+  },
+  {
+    q: "Which statement reflects the interdependency of management functions?",
+    choices: [
+      "Leading relies on a well-structured organization and clear plans",
+      "Planning is only needed before other functions begin",
+      "Organizing and planning can replace the need for controlling",
+      "Controlling is independent of organizing"
+    ],
+    correctText: "Leading relies on a well-structured organization and clear plans",
+    hint: "Management functions (Planning, Organizing, Leading, Controlling) form an interconnected cycle.",
+    explanation: "<strong>Management Principles:</strong> Effective leading requires clear directional goals (Planning) and defined organizational roles/resources (Organizing)."
+  },
+  {
+    q: "What is a widget in graphical user interface (GUI) programming?",
+    choices: [
+      "A specialized programming language for designing user interfaces",
+      "A dynamic memory technique for managing program resources",
+      "A graphical control element such as a button or text box",
+      "A variable structure used to store program data and values"
+    ],
+    correctText: "A graphical control element such as a button or text box",
+    hint: "Examples include buttons, sliders, text boxes, and checkboxes.",
+    explanation: "<strong>GUI Programming:</strong> A widget (window gadget) is an element of interaction in a GUI, such as a button, dropdown menu, scrollbar, or text input box."
+  },
+  {
+    q: "Which of the following does not constitute the foundation of ethics?",
+    choices: [
+      "Honesty",
+      "Justice",
+      "Courtesy",
+      "Integrity"
+    ],
+    correctText: "Courtesy",
+    hint: "Courtesy relates to social manners/etiquette, whereas honesty, justice, and integrity represent core moral principles.",
+    explanation: "<strong>Ethics Principles:</strong> Honesty, justice, and integrity form core universal moral foundations. Courtesy is a social etiquette/politeness convention rather than a primary fundamental ethical imperative."
+  },
+  {
+    q: "An electronics company introduces standardized work procedures to ensure that every product meets the same specifications. Which operations objective is primarily addressed?",
+    choices: [
+      "Product promotion",
+      "Quality consistency",
+      "Market segmentation",
+      "Flexibility"
+    ],
+    correctText: "Quality consistency",
+    hint: "Standardized procedures ensure product uniformity across batch production.",
+    explanation: "<strong>Operations Management:</strong> Standardizing procedures directly achieves quality consistency by removing operational variability."
+  },
+  {
+    q: "In business ethics, an ethical dilemma arises when a decision involves a conflict between moral principles, such as honesty versus loyalty or fairness versus self-interest. Which of the following situations best illustrates an ethical dilemma?",
+    choices: [
+      "Deciding whether to report internal fraud",
+      "Selecting a product design feature based on customer preferences",
+      "Picking between two suppliers with equal prices",
+      "Determining how to distribute performance bonuses among employees"
+    ],
+    correctText: "Deciding whether to report internal fraud",
+    hint: "Choose the scenario involving a direct clash of competing moral duties (e.g., loyalty to colleagues vs. honesty/legal compliance).",
+    explanation: "<strong>Ethics Concept:</strong> Reporting internal fraud involves an ethical dilemma between company/colleague loyalty and moral duties of honesty, integrity, and lawfulness."
+  },
+  {
+    q: "What is the use of a finally block in exception handling?",
+    choices: [
+      "To repeat the try block and re-evaluate the handled exception sequence",
+      "To identify syntax errors and ensure proper code compilation",
+      "To execute code regardless of whether an exception occurred",
+      "To raise a new exception and terminate program execution immediately"
+    ],
+    correctText: "To execute code regardless of whether an exception occurred",
+    hint: "The code inside `finally` runs unconditionally (often used to release resources like files or database connections).",
+    explanation: "<strong>Programming Concept:</strong> The `finally` block executes cleanup actions unconditionally, whether an exception was raised inside the `try` block or caught in `except`/`catch`."
+  },
+  {
+    q: "Two mutually exclusive projects both satisfy the company's MARR. Which project should generally be selected?",
+    choices: [
+      "The one with the highest economic worth",
+      "The one with the shortest life only.",
+      "The one with the highest first cost",
+      "Both projects should be accepted."
+    ],
+    correctText: "The one with the highest economic worth",
+    hint: "When choosing between mutually exclusive projects, maximize net value (e.g., highest Net Present Value / PW).",
+    explanation: "<strong>Engineering Economy:</strong> For mutually exclusive alternatives meeting the MARR, select the single option that maximizes total economic worth (highest NPV or annual worth)."
+  },
+  {
+    q: "Which of the following pollutants is primarily responsible for eutrophication in water bodies?",
+    choices: [
+      "Sulfates and carbonates",
+      "Organic matter from sewage discharge",
+      "Nitrates and phosphates",
+      "Sodium chloride"
+    ],
+    correctText: "Nitrates and phosphates",
+    hint: "Excess agricultural fertilizers containing $N$ and $P$ spur excessive algal blooms.",
+    explanation: "<strong>Environmental Science:</strong> Nitrates ($NO_3^-$) and phosphates ($PO_4^{3-}$) from agricultural runoff and sewage act as nutrient over-fertilizers in aquatic bodies, causing massive algal blooms and subsequent oxygen depletion (eutrophication)."
+  },
+  {
+    q: "Which architecture uses separate memories for program instructions and data, allowing simultaneous access?",
+    choices: [
+      "Von Neumann Architecture",
+      "Client-Server Architecture",
+      "RISC Architecture",
+      "Harvard Architecture"
+    ],
+    correctText: "Harvard Architecture",
+    hint: "Von Neumann shares a single memory for data and instructions; this architecture physically separates them.",
+    explanation: "<strong>Computer Architecture:</strong> Harvard Architecture utilizes separate signal paths and memory units for instructions and data, enabling simultaneous instruction fetching and data reading."
+  },
+  {
+    q: "If two ideal polarizing filters are placed with their transmission axes at right angles (90°), what happens to the intensity of the transmitted light?",
+    choices: [
+      "It is reduced to half of the incident intensity",
+      "It remains unchanged",
+      "It becomes zero",
+      "It becomes maximum"
+    ],
+    correctText: "It becomes zero",
+    hint: "Apply Malus's Law $I = I_0 \\cos^2(\\theta)$ for $\\theta = 90^\\circ$.",
+    explanation: "<strong>Formula:</strong> Malus's Law: $I = I_0 \\cos^2(\\theta)$.<br>Since $\\theta = 90^\\circ$ and $\\cos(90^\\circ) = 0$, $I = 0$. No light passes through crossed polarizers."
+  },
+  {
+    q: "A smartphone manufacturer lowers its prices because several competitors offer nearly identical products. Which of Porter's Five Forces is most evident?",
+    choices: [
+      "Threat of Substitutes",
+      "Bargaining Power of Suppliers",
+      "Threat of New Entrants",
+      "Rivalry Among Existing Competitors"
+    ],
+    correctText: "Rivalry Among Existing Competitors",
+    hint: "Direct competition between firms in the same market offering similar products forces price reduction.",
+    explanation: "<strong>Porter's Five Forces:</strong> Price cutting among existing manufacturers selling standardized/undifferentiated goods demonstrates intense 'Rivalry Among Existing Competitors'."
+  },
+  {
+    q: "A project requires an initial investment of ₱500,000 and generates ₱100,000 per year. Ignoring interest, what is its payback period?",
+    choices: [
+      "3 years",
+      "6 years",
+      "5 years",
+      "4 years"
+    ],
+    correctText: "5 years",
+    hint: "Simple payback period = $\\frac{\\text{Initial Investment}}{\\text{Annual Cash Inflow}}$.",
+    explanation: "<strong>Calculation:</strong><br>$\\text{Payback Period} = \\frac{\\text{₱500,000}}{\\text{₱100,000/year}} = 5 \\text{ years}$."
+  },
+  {
+    q: "Which Philippine law is known as the Clean Air Act?",
+    choices: [
+      "Republic Act 9003",
+      "Presidential Decree 1586",
+      "Republic Act 8749",
+      "Republic Act 9275"
+    ],
+    correctText: "Republic Act 8749",
+    hint: "Approved in 1999 to establish a comprehensive air pollution control policy.",
+    explanation: "<strong>Legal Context:</strong> Republic Act No. 8749 is titled the 'Philippine Clean Air Act of 1999'."
+  },
+  {
+    q: "Which Philippine law primarily protects intellectual property rights, including patents, trademarks, copyrights, and industrial designs?",
+    choices: [
+      "Republic Act No. 7394",
+      "Republic Act No. 8792",
+      "Republic Act No. 8293",
+      "Republic Act No. 10173"
+    ],
+    correctText: "Republic Act No. 8293",
+    hint: "Known as the Intellectual Property Code of the Philippines.",
+    explanation: "<strong>Legal Context:</strong> Republic Act No. 8293 is the 'Intellectual Property Code of the Philippines'."
+  },
+  {
+    q: "Given a cache access time of 2 ns, a main memory access time of 80 ns, and a cache hit rate of 90%, what is the effective memory access time?",
+    choices: [
+      "8 ns",
+      "10 ns",
+      "18 ns",
+      "12 ns"
+    ],
+    correctText: "10 ns",
+    hint: "$T_{eff} = T_{cache} + (1 - h) \\times T_{main}$, where $h = 0.90$.",
+    explanation: "<strong>Formula & Calculation:</strong><br>$T_{eff} = T_{cache} + (1 - h) T_{main} = 2 \\text{ ns} + (1 - 0.90) \\times 80 \\text{ ns} = 2 + (0.10 \\times 80) = 2 + 8 = 10 \\text{ ns}$."
+  },
+  {
+    q: "A tourism development master plan for coastal resorts is being prepared. Which process ensures that marine biodiversity and cultural heritage are considered?",
+    choices: [
+      "Environmental Impact Assessment",
+      "Strategic Environmental Assessment",
+      "Environmental Audit",
+      "Environmental Monitoring"
+    ],
+    correctText: "Strategic Environmental Assessment",
+    hint: "EIA applies to specific individual projects; SEA evaluates high-level plans, policies, and master programs.",
+    explanation: "<strong>EIA vs. SEA:</strong> Strategic Environmental Assessment (SEA) integrates environmental and sustainability factors into macro-level policy, plan, and program formulations like master plans."
+  },
+  {
+    q: "If the velocity of an object is doubled, what happens to its kinetic energy?",
+    choices: [
+      "It becomes half",
+      "It becomes double",
+      "It becomes triple",
+      "It becomes four times"
+    ],
+    correctText: "It becomes four times",
+    hint: "$KE = \\frac{1}{2}m v^2$. Note the square dependency on velocity.",
+    explanation: "<strong>Formula:</strong> $KE = \\frac{1}{2} m v^2$.<br>If velocity doubles ($v' = 2v$), $KE' = \\frac{1}{2} m (2v)^2 = 4 \\left(\\frac{1}{2}m v^2\\right) = 4 KE$."
+  },
+  {
+    q: "Which of the following has the same unit as work?",
+    choices: [
+      "Watt",
+      "Joule",
+      "Newton",
+      "Pascal"
+    ],
+    correctText: "Joule",
+    hint: "Work $W = F \\cdot d$ (Newton-meters). Energy and work share the same SI unit.",
+    explanation: "<strong>Physics Concept:</strong> Work and energy are both measured in Joules (J), where $1 \\text{ J} = 1 \\text{ N}\\cdot\\text{m} = 1 \\text{ kg}\\cdot\\text{m}^2/\\text{s}^2$."
+  },
+  {
+    q: "A company compares two projects using sensitivity analysis. Project A remains profitable over a wide range of sales volumes, while Project B becomes unprofitable with a small decrease in sales. Which project has lower risk?",
+    choices: [
+      "Project B",
+      "Project A",
+      "Cannot be determined.",
+      "Both have equal risk."
+    ],
+    correctText: "Project A",
+    hint: "Lower sensitivity to negative market changes indicates greater economic robustness.",
+    explanation: "<strong>Engineering Economy:</strong> Project A exhibits lower risk because its profitability is robust against variations in key parameter estimates (sales volume)."
+  },
+  {
+    q: "The rotational kinetic energy of a rigid body is:",
+    choices: [
+      "½ Iω²",
+      "Iω",
+      "½ mv²",
+      "Iα"
+    ],
+    correctText: "½ Iω²",
+    hint: "Analogous to translational kinetic energy $\\frac{1}{2}m v^2$, replacing mass $m$ with moment of inertia $I$ and linear velocity $v$ with angular velocity $\\omega$.",
+    explanation: "<strong>Physics Formula:</strong> Rotational Kinetic Energy $KE_{rot} = \\frac{1}{2} I \\omega^2$."
+  },
+  {
+    q: "What is the main purpose of garbage collection in high-level programming languages?",
+    choices: [
+      "To optimize compiler performance and reduce processing overhead",
+      "To manage memory by automatically freeing unused objects and resources",
+      "To allocate memory space for global variables and shared data structures",
+      "To detect program syntax errors and ensure structural consistency"
+    ],
+    correctText: "To manage memory by automatically freeing unused objects and resources",
+    hint: "Prevents memory leaks without requiring manual `free()` memory deallocation.",
+    explanation: "<strong>Computer Science:</strong> Garbage collection automatically reclaims heap memory allocated to objects that are no longer accessible or referenced by the application."
+  },
+  {
+    q: "A single slit is 0.20 mm wide and illuminated with 500 nm light. The screen is 2 m away. What is the distance from the central maximum to the first minimum?",
+    choices: [
+      "2.5 mm",
+      "7.5 mm",
+      "10 mm",
+      "5.0 mm"
+    ],
+    correctText: "5.0 mm",
+    hint: "Single-slit diffraction minimum: $a \\sin\\theta = m \\lambda$. For small angles, $y = \\frac{m \\lambda L}{a}$.",
+    explanation: "<strong>Formula & Calculation:</strong><br>$y = \\frac{m \\lambda L}{a} = \\frac{1 \\times (500 \\times 10^{-9} \\text{ m}) \\times 2 \\text{ m}}{0.20 \\times 10^{-3} \\text{ m}} = \\frac{1000 \\times 10^{-9}}{0.0002} = 5.0 \\times 10^{-3} \\text{ m} = 5.0 \\text{ mm}$."
+  },
+  {
+    q: "What term refers to the maximum stress a material can withstand before failure occurs?",
+    choices: [
+      "Ultimate tensile strength",
+      "Yield strength",
+      "Tensile strength limit",
+      "Fracture strength"
+    ],
+    correctText: "Ultimate tensile strength",
+    hint: "Peak stress on an engineering stress-strain curve.",
+    explanation: "<strong>Materials Science:</strong> Ultimate Tensile Strength (UTS) is the maximum stress engineering value sustained by a specimen in tension before necking/fracture."
+  },
+  {
+    q: "A heat engine receives 1200 kJ of heat from a high-temperature reservoir and rejects 750 kJ to the sink. Another engine receives the same heat input but rejects only 600 kJ. Which engine has the higher thermal efficiency?",
+    choices: [
+      "Cannot be determined",
+      "The second engine",
+      "Both have the same efficiency",
+      "The first engine"
+    ],
+    correctText: "The second engine",
+    hint: "Thermal efficiency $\\eta = 1 - \\frac{Q_L}{Q_H} = \\frac{W}{Q_H}$. Rejecting less waste heat means higher efficiency.",
+    explanation: "<strong>Calculation:</strong><br>Engine 1: $\\eta_1 = 1 - \\frac{750}{1200} = 1 - 0.625 = 37.5\\%$.<br>Engine 2: $\\eta_2 = 1 - \\frac{600}{1200} = 1 - 0.50 = 50\\%$.<br>The second engine has higher efficiency."
+  },
+  {
+    q: "What does the term \"cumulative impact\" refer to in Environmental Impact Assessment (EIA)?",
+    choices: [
+      "The combined effects of past, present, and future projects within the same region",
+      "The overall economic and social benefits accumulated through project development",
+      "The combined environmental consequences of all related activities over time",
+      "The combined effects of multiple pollutants interacting within a single project area"
+    ],
+    correctText: "The combined environmental consequences of all related activities over time",
+    hint: "Refers to incremental environmental impacts caused by multiple combined actions over time.",
+    explanation: "<strong>EIA Concept:</strong> Cumulative impact is the total incremental effect on the environment caused by an action when added to other past, present, and reasonably foreseeable future actions."
+  },
+  {
+    q: "Which of the following best describes the primary goal of managing the marketing function?",
+    choices: [
+      "Increasing company hierarchy levels",
+      "Delivering superior value to customers",
+      "Maximizing production output",
+      "Reducing advertising costs"
+    ],
+    correctText: "Delivering superior value to customers",
+    hint: "Marketing focuses customer-centric value creation and retention.",
+    explanation: "<strong>Marketing Management:</strong> The core purpose of modern marketing management is to create, communicate, and deliver superior customer value to attract and retain profitable target customers."
+  },
+  {
+    q: "A machine claims to convert all absorbed heat into work without rejecting any heat to the surroundings. This machine violates:",
+    choices: [
+      "Conservation of Momentum",
+      "Boyle's Law",
+      "First Law of Thermodynamics",
+      "Second Law of Thermodynamics"
+    ],
+    correctText: "Second Law of Thermodynamics",
+    hint: "Kelvin-Planck statement: No heat engine operating in a cycle can convert all heat absorbed into net work output.",
+    explanation: "<strong>Thermodynamics:</strong> The Kelvin-Planck statement of the Second Law dictates that it is impossible for any cyclic device to receive heat from a single reservoir and produce an equivalent amount of work without rejecting waste heat."
+  },
+  {
+    q: "A sound wave travels through air and hits a solid wall. Most of the wave energy is:",
+    choices: [
+      "Transmitted through the wall",
+      "Reflected back into the air",
+      "Amplified at the boundary",
+      "Converted into light"
+    ],
+    correctText: "Reflected back into the air",
+    hint: "Consider the large acoustic impedance mismatch between air and a dense solid wall.",
+    explanation: "<strong>Acoustics Concept:</strong> Due to the severe acoustic impedance mismatch between air and a dense solid wall, the majority of acoustic energy is reflected back into the air."
+  },
+  {
+    q: "When was Republic Act No. 9292 approved by President Gloria Macapagal Arroyo?",
+    choices: [
+      "April 19, 2004",
+      "April 17, 2004",
+      "April 27, 2004",
+      "April 12, 2004"
+    ],
+    correctText: "April 17, 2004",
+    hint: "Electronics Engineering Law of 2004 enactment date.",
+    explanation: "<strong>Legal Context:</strong> Republic Act No. 9292 (ECE Act of 2004) was officially signed into law on April 17, 2004."
+  },
+  {
+    q: "A company states: \"To be the leading renewable energy company in Southeast Asia by 2040.\" This statement is best classified as:",
+    choices: [
+      "Policy",
+      "Mission",
+      "Objective",
+      "Vision"
+    ],
+    correctText: "Vision",
+    hint: "Missions state current core purpose; Visions articulate desired future aspirations.",
+    explanation: "<strong>Strategic Planning:</strong> A Vision statement describes an organization's long-term aspirational goals for the future ('To be... by 2040')."
+  },
+  {
+    q: "What is the primary advantage of polymorphism in object-oriented programming?",
+    choices: [
+      "It allows functions or methods to behave differently based on input.",
+      "It improves program security and access control mechanisms.",
+      "It increases memory usage for complex object-oriented applications.",
+      "It ensures program syntax and structure remain consistently correct."
+    ],
+    correctText: "It allows functions or methods to behave differently based on input.",
+    hint: "Polymorphism means 'many forms'—enabling single interface function overrides.",
+    explanation: "<strong>OOP Concept:</strong> Polymorphism enables objects of different classes to respond to the same method call in class-specific ways, promoting code flexibility and extensibility."
+  },
+  {
+    q: "During nuclear fission, what happens to the atomic nucleus?",
+    choices: [
+      "It combines with another nucleus",
+      "It absorbs a proton and becomes heavier",
+      "It splits into two smaller nuclei, releasing energy",
+      "It remains unchanged but emits radiation"
+    ],
+    correctText: "It splits into two smaller nuclei, releasing energy",
+    hint: "Fission = splitting apart; Fusion = combining together.",
+    explanation: "<strong>Nuclear Physics:</strong> Fission occurs when a heavy atomic nucleus (e.g., U-235) splits into two lighter daughter nuclei, releasing neutrons and binding energy."
+  },
+  {
+    q: "What is the primary purpose of the Miller indices (hkl) in crystallography?",
+    choices: [
+      "To measure the average grain size of a solid",
+      "To determine a material's thermal conductivity",
+      "To indicate the atomic mass of elements",
+      "To specify the orientation of crystal planes"
+    ],
+    correctText: "To specify the orientation of crystal planes",
+    hint: "Notation system in crystallography $(hkl)$ for planes and $[hkl]$ for directions.",
+    explanation: "<strong>Crystallography:</strong> Miller indices $(hkl)$ form a standardized mathematical vector notation system to define the spatial orientation of lattice planes inside a crystal."
+  },
+  {
+    q: "Which government agency is tasked with policy formulation under RA 12234 or the \"Konektadong Pinoy Act.\"?",
+    choices: [
+      "DICT",
+      "PCC",
+      "NTC",
+      "DTI"
+    ],
+    correctText: "DICT",
+    hint: "Department handling ICT infrastructure and policies in the Philippines.",
+    explanation: "<strong>Legal & Policy Context:</strong> DICT (Department of Information and Communications Technology) is the executive agency mandated with ICT policy formulation under Philippine digital connectivity laws."
+  },
+  {
+    q: "Which of the following best describes fossil fuels?",
+    choices: [
+      "Inexhaustible sources of energy derived from continuous solar radiation",
+      "All of the choices",
+      "Formed from decomposed plant and animal matter over millions of years under heat and pressure",
+      "Renewable energy resources that form through natural processes and naturally replenished within a few decades"
+    ],
+    correctText: "Formed from decomposed plant and animal matter over millions of years under heat and pressure",
+    hint: "Coal, oil, and natural gas originate from ancient organic matter.",
+    explanation: "<strong>Geology & Energy:</strong> Fossil fuels (hydrocarbons) formed from anaerobic decay of buried organic organisms over hundreds of millions of years under geological heat and pressure."
+  },
+  {
+    q: "Which CAD model represents an object using only lines and curves without surfaces or volume?",
+    choices: [
+      "Wireframe model",
+      "Parametric model",
+      "Surface model",
+      "Solid model"
+    ],
+    correctText: "Wireframe model",
+    hint: "Consists of 3D skeletal edge paths without skin, surface, or mass properties.",
+    explanation: "<strong>CAD Systems:</strong> A wireframe model represents 3D objects using only vertex points and connecting edge lines/curves, containing no surface geometry or volumetric mass definition."
+  },
+  {
+    q: "A point charge is surrounded by a spherical Gaussian surface. If the radius of the sphere is doubled, the electric flux through the surface:",
+    choices: [
+      "Becomes one-half.",
+      "Doubles.",
+      "Becomes one-fourth.",
+      "Remains unchanged."
+    ],
+    correctText: "Remains unchanged.",
+    hint: "Gauss's Law: Electric flux $\\Phi_e = \\frac{Q_{enclosed}}{\ mepsilon_0}$. Note that flux depends only on enclosed charge.",
+    explanation: "<strong>Formula:</strong> $\\Phi_e = \\oint \\mathbf{E} \\cdot d\\mathbf{A} = \\frac{Q_{enclosed}}{\\varepsilon_0}$.<br><strong>Reasoning:</strong> Since enclosed charge $Q$ does not change when radius doubles, total electric flux passing through the Gaussian surface remains unchanged."
+  },
+  {
+    q: "If an electron in hydrogen jumps from n = 5 to n = 2, the resulting radiation lies in:",
+    choices: [
+      "Infrared (Paschen series region)",
+      "Ultraviolet (Lyman series region)",
+      "X-ray (inner-shell transitions in heavier atoms)",
+      "Visible (Balmer series region)"
+    ],
+    correctText: "Visible (Balmer series region)",
+    hint: "Transitions terminating at $n=1$: Lyman (UV); $n=2$: Balmer (Visible); $n=3$: Paschen (IR).",
+    explanation: "<strong>Atomic Physics:</strong> Hydrogen spectral transitions terminating at $n=2$ belong to the Balmer series, emitting photons within the visible spectrum."
+  },
+  {
+    q: "An RLC circuit has R = 40 Ω, X_L = 60 Ω, and X_C = 20 Ω. Another circuit has the same resistance but X_L = 20 Ω and X_C = 60 Ω. Which statement is true?",
+    choices: [
+      "The first circuit has the larger impedance.",
+      "The second circuit has the larger impedance.",
+      "Both circuits are at resonance.",
+      "Both circuits have the same impedance."
+    ],
+    correctText: "Both circuits have the same impedance.",
+    hint: "Impedance $Z = \\sqrt{R^2 + (X_L - X_C)^2}$. Evaluate $(X_L - X_C)^2$ for both.",
+    explanation: "<strong>Formula & Calculation:</strong><br>Circuit 1: $Z_1 = \\sqrt{40^2 + (60 - 20)^2} = \\sqrt{40^2 + 40^2} = 40\\sqrt{2} \\ \\Omega$.<br>Circuit 2: $Z_2 = \\sqrt{40^2 + (20 - 60)^2} = \\sqrt{40^2 + (-40)^2} = 40\\sqrt{2} \\ \\Omega$.<br>Both circuits possess equal total impedance $Z = 56.57 \\ \\Omega$."
+  },
+  {
+    q: "A company plans to introduce a premium electric bicycle designed specifically for urban professionals with high disposable incomes. Which marketing activity is being demonstrated?",
+    choices: [
+      "Selective targeting on affluent buyers",
+      "Premium differentiation strategy",
+      "Product diversification",
+      "Market segmentation"
+    ],
+    correctText: "Market segmentation",
+    hint: "Dividing a broad target market into distinct subsets based on income, demographics, and lifestyle.",
+    explanation: "<strong>Marketing Strategy:</strong> Identifying and defining a specific customer group (urban professionals with high disposable income) represents Market Segmentation."
+  },
+  {
+    q: "In rechargeable batteries, why does capacity tend to decrease with repeated cycles?",
+    choices: [
+      "Irreversible chemical changes and electrode degradation",
+      "Decrease in ion mobility in the salt bridge and increase in external load resistance",
+      "Increase in external load resistance",
+      "Increase in electrolyte concentration"
+    ],
+    correctText: "Irreversible chemical changes and electrode degradation",
+    hint: "Repeated charge/discharge leads to active material loss, SEI growth, and structural cracking.",
+    explanation: "<strong>Battery Chemistry:</strong> Cyclic capacity fade is driven by unwanted side reactions, solid electrolyte interphase (SEI) growth, crystal structure degradation, and active lithium loss over time."
+  },
+  {
+    q: "Why are fossil fuels considered unsustainable?",
+    choices: [
+      "They emit greenhouse gases and are finite in supply, leading to long-term depletion",
+      "They enhance ecosystem productivity and promote environmental stability",
+      "They are overabundant and easily replenished through natural cycles",
+      "They produce limited energy and require inefficient conversion processes"
+    ],
+    correctText: "They emit greenhouse gases and are finite in supply, leading to long-term depletion",
+    hint: "Consider finite resource reserves and greenhouse gas environmental impacts.",
+    explanation: "<strong>Sustainability:</strong> Fossil fuels are unsustainable because they are non-renewable finite resources undergoing rapid depletion while driving anthropogenic climate change through $CO_2$ emissions."
+  },
+  {
+    q: "Technopreneurs often apply effectual thinking. What does this approach emphasize?",
+    choices: [
+      "Depending on external investors to start a business",
+      "Building ventures using resources they already control",
+      "Copying already-successful business models",
+      "Predicting future outcomes before committing resources"
+    ],
+    correctText: "Building ventures using resources they already control",
+    hint: "Effectuation starts with given means: 'Who I am, what I know, and whom I know'.",
+    explanation: "<strong>Entrepreneurship:</strong> Effectual reasoning focuses on starting with available means (existing skills, knowledge, and network) to create new ends, rather than pre-defining goals and searching for new resources."
+  },
+  {
+    q: "An investor provides funding to a startup during its early stage in exchange for an ownership interest. This investor is commonly known as a:",
+    choices: [
+      "Venture capitalist",
+      "Incorporator",
+      "Angel investor",
+      "Strategic partner"
+    ],
+    correctText: "Angel investor",
+    hint: "Individual affluent investor providing seed capital to early-stage startups.",
+    explanation: "<strong>Entrepreneurial Finance:</strong> An Angel Investor is a high-net-worth individual who provides early seed equity capital to early-stage business ventures."
+  },
+  {
+    q: "An Electronics Engineer attends an IECEP national convention to earn CPD units and learn about emerging technologies. This activity primarily demonstrates IECEP's role in:",
+    choices: [
+      "All of the choices",
+      "Government regulation of engineering practice.",
+      "Judicial enforcement of engineering laws and issuance of engineering licenses.",
+      "Professional development and lifelong learning."
+    ],
+    correctText: "Professional development and lifelong learning.",
+    hint: "IECEP is the Accredited Professional Organization (APO) supporting continuous training for engineers.",
+    explanation: "<strong>Professional Practice:</strong> Accredited professional organizations like IECEP host technical conventions and CPD seminars to foster lifelong technical development and competence among engineers."
+  },
+  {
+    q: "What is the main reason biofuels are regarded as sustainable energy sources?",
+    choices: [
+      "They release fewer pollutants during combustion",
+      "They are produced from abundant natural materials",
+      "They can be converted efficiently into usable energy",
+      "They are derived from renewable biological materials"
+    ],
+    correctText: "They are derived from renewable biological materials",
+    hint: "Biomass crops replenish naturally within short agricultural harvesting cycles.",
+    explanation: "<strong>Renewable Energy:</strong> Biofuels are derived from living organic matter (biomass) that can be repeatedly grown and harvested within short agricultural cycles."
+  },
+  {
+    q: "What type of crystal imperfection occurs when an atom is displaced from its normal lattice position to an interstitial site within the same crystal?",
+    choices: [
+      "Frenkel defect",
+      "Line defect",
+      "Schottky defect",
+      "Vacancy defect"
+    ],
+    correctText: "Frenkel defect",
+    hint: "Frenkel defect = vacancy-interstitial pair; Schottky defect = paired cation-anion vacancies.",
+    explanation: "<strong>Materials Science:</strong> A Frenkel defect forms when an ion/atom leaves its regular lattice site (creating a vacancy) and moves into a neighboring interstitial position."
+  },
+  {
+    q: "A startup has completed its business plan and is now assigning responsibilities, allocating resources, and setting timelines. Which phase of management is being performed?",
+    choices: [
+      "Business plan execution",
+      "Feasibility study",
+      "Business plan preparation",
+      "Market analysis"
+    ],
+    correctText: "Business plan execution",
+    hint: "Translating written plans into concrete operational actions and resource allocation.",
+    explanation: "<strong>Management Process:</strong> Assigning duties, allocating budget resources, and establishing operational schedules are core tasks during Business Plan Execution."
+  },
+  {
+    q: "How many atoms are effectively shared in a simple cubic unit cell corner atom?",
+    choices: [
+      "1/8",
+      "1/2",
+      "1/4",
+      "1"
+    ],
+    correctText: "1/8",
+    hint: "A corner of a cube is shared by 8 adjacent cubes in a 3D crystal grid.",
+    explanation: "<strong>Crystallography:</strong> In any cubic unit cell, each corner position is shared equally by 8 neighboring unit cells. Thus, a single corner atom contributes $\\frac{1}{8}$ of an atom to each cell."
+  }
+];
 
-let day = DAYS[0], time = null;
-
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
-
-
-
-function takenCount(d,t){ return (TAKEN[d]||{})[t]||0; }
-
-function renderDays(){
-  const c = document.getElementById('days'); c.innerHTML = '';
-  DAYS.forEach(d => {
-    const b = document.createElement('button');
-    b.className = 'day-btn'+(d===day?' sel':'');
-    const parts = d.split(' ');
-    b.textContent = d;
-    b.title = d;
-    b.onclick = () => {day=d;time=null;renderDays();renderSlots();upd();};
-    c.appendChild(b);
-  });
+// Helper: Shuffle Array (Fisher-Yates)
+function shuffleArray(array) {
+  let arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
-function renderSlots(){
-  const c = document.getElementById('slots'); c.innerHTML = '';
-  SLOTS.forEach(t => {
-    const used = takenCount(day, t);
-    const avail = SLOT_CAPACITY - used;
-    const full = avail <= 0;
-    const noFit = false;
-    const card = document.createElement('div');
-    const isSel = t === time;
-    card.className = 'slot-card' + (full?' bk':isSel?' sel':'');
-    const pct = Math.round((used/SLOT_CAPACITY)*100);
-    let capLabel = full ? 'Full' : `${avail} of ${SLOT_CAPACITY} left`;
-    let barColor = avail > 5 ? 'var(--forest-mid)' : avail > 2 ? '#B8863A' : '#C0392B';
-    if(isSel) barColor = '#fff';
-    card.innerHTML = `
-      <div class="slot-time">${t}</div>
-      
-      <div class="slot-bar-wrap"><div class="slot-bar" style="width:${pct}%;background:${barColor}"></div></div>`;
-    if(!full){
-        card.onclick = () => {
-            time=t;
-            renderSlots();
-            upd();
-            document.getElementById('err-time').style.display='none';
-        };
+// App State
+let quizQuestions = [];
+let userAnswers = []; // null or index of selected choice
+let hintShown = [];
+
+let currentIndex = 0;
+let score = 0;
+let answeredCount = 0;
+let correctCount = 0;
+let incorrectCount = 0;
+
+// Initialize Quiz
+function initQuiz() {
+  quizQuestions = rawQuestionsData.map((item) => {
+    const shuffledChoices = shuffleArray(item.choices);
+    return {
+      q: item.q,
+      choices: shuffledChoices,
+      correctIndex: shuffledChoices.indexOf(item.correctText),
+      hint: item.hint,
+      explanation: item.explanation
+    };
+  });
+
+  userAnswers = new Array(quizQuestions.length).fill(null);
+  hintShown = new Array(quizQuestions.length).fill(false);
+  
+  currentIndex = 0;
+  score = 0;
+  answeredCount = 0;
+  correctCount = 0;
+  incorrectCount = 0;
+
+  document.getElementById('quiz-card').style.display = 'flex';
+  document.getElementById('results-card').style.display = 'none';
+
+  updateStatsDisplay();
+  renderQuestion();
+}
+
+// Render Question
+function renderQuestion() {
+  const currentQ = quizQuestions[currentIndex];
+
+  // Update top right progress badge
+  document.getElementById('progress-indicator').textContent = `Item ${currentIndex + 1} of ${quizQuestions.length}`;
+
+  // IMPORTANT: Display Question Text ONLY - No number before question!
+  document.getElementById('question-text').innerHTML = currentQ.q;
+
+  // Hint Box
+  const hintBox = document.getElementById('hint-box');
+  const btnHint = document.getElementById('btn-hint');
+  
+  if (hintShown[currentIndex]) {
+    hintBox.style.display = 'block';
+    hintBox.innerHTML = `<strong>Hint:</strong> ${currentQ.hint}`;
+    btnHint.textContent = 'Hide Hint';
+  } else {
+    hintBox.style.display = 'none';
+    btnHint.textContent = 'Show Hint';
+  }
+
+  // Render Choices
+  const choicesContainer = document.getElementById('choices-container');
+  choicesContainer.innerHTML = '';
+
+  const selectedIndex = userAnswers[currentIndex];
+  const isAnswered = selectedIndex !== null;
+
+  currentQ.choices.forEach((choiceText, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = choiceText;
+
+    if (isAnswered) {
+      btn.disabled = true;
+      if (index === currentQ.correctIndex) {
+        btn.classList.add('reveal-correct');
+      }
+      if (index === selectedIndex) {
+        if (selectedIndex === currentQ.correctIndex) {
+          btn.classList.add('selected-correct');
+        } else {
+          btn.classList.add('selected-wrong');
+        }
+      }
+    } else {
+      btn.onclick = () => selectAnswer(index);
     }
-    c.appendChild(card);
+
+    choicesContainer.appendChild(btn);
   });
-}
 
-function upd(){
-  const svc = document.getElementById('svc').value;
-  let timeDisplay = time ? time : '<span style="color:var(--muted);font-weight:300">Not selected</span>';
+  // Explanation Box
+  const explanationBox = document.getElementById('explanation-box');
+  const explanationTitle = document.getElementById('explanation-title');
+  const explanationBody = document.getElementById('explanation-body');
 
-  document.getElementById('summary').innerHTML = `
-    <div class="summary-row"><span class="summary-key">Service</span><span class="summary-val">${svc}</span></div>
-    <div class="summary-row"><span class="summary-key">Date</span><span class="summary-val">${day}</span></div>
-    <div class="summary-row"><span class="summary-key">Time</span><span class="summary-val">${timeDisplay}</span></div>
-  `;
-}
-function submit(){
-  const fn = document.getElementById('fname').value.trim();
-  const ln = document.getElementById('lname').value.trim();
-  const em = document.getElementById('email').value.trim();
-  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
-  let ok = true;
-  const se = (id,v) => {document.getElementById(id).style.display=v?'none':'block';if(!v)ok=false;};
-  se('err-fname',fn); se('err-lname',ln); se('err-email',validEmail);
-  document.getElementById('err-time').style.display = time?'none':'block';
-  if(!time)ok=false;
-  if(!ok)return;
-  const svc = document.getElementById('svc').value;
+  if (isAnswered) {
+    explanationBox.style.display = 'block';
+    explanationBody.innerHTML = currentQ.explanation;
+
+    if (selectedIndex === currentQ.correctIndex) {
+      explanationBox.className = 'explanation-box correct-mode';
+      explanationTitle.innerHTML = ' Correct!';
+    } else {
+      explanationBox.className = 'explanation-box wrong-mode';
+      explanationTitle.innerHTML = ' Incorrect';
+    }
+  } else {
+    explanationBox.style.display = 'none';
+  }
+
+  // Navigation Buttons State
+  document.getElementById('btn-prev').disabled = currentIndex === 0;
   
+  const btnNext = document.getElementById('btn-next');
+  if (currentIndex === quizQuestions.length - 1) {
+    btnNext.textContent = isAnswered ? 'Finish Quiz' : 'Next';
+  } else {
+    btnNext.textContent = 'Next';
+  }
 
-  const ref = Math.floor(100000+Math.random()*900000);
-  document.getElementById('conf-ref').textContent = ref;
-  document.getElementById('conf-email').textContent = em;
-
-  document.getElementById('conf-rows').innerHTML = `
-    <div class="summary-row"><span class="summary-key">Contact</span><span class="summary-val">${fn} ${ln}</span></div>
-    <div class="summary-row"><span class="summary-key">Service</span><span class="summary-val">${svc}</span></div>
-    <div class="summary-row"><span class="summary-key">Date</span><span class="summary-val">${day}</span></div>
-    <div class="summary-row"><span class="summary-key">Time</span><span class="summary-val">${time} <span class="badge">Confirmed</span></span></div>
-    `;
-
-
-  showScreen('s-confirm');
+  // Trigger MathJax typesetting for equations
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    MathJax.typesetPromise();
+  }
 }
 
-function again(){
-  ['fname','lname','email','phone','notes'].forEach(id=>document.getElementById(id).value='');
-  time=null; 
+// User selects answer
+function selectAnswer(choiceIndex) {
+  if (userAnswers[currentIndex] !== null) return;
+
+  userAnswers[currentIndex] = choiceIndex;
+  const currentQ = quizQuestions[currentIndex];
+
+  answeredCount++;
+  if (choiceIndex === currentQ.correctIndex) {
+    score++;
+    correctCount++;
+  } else {
+    incorrectCount++;
+  }
+
+  updateStatsDisplay();
+  renderQuestion();
+}
+
+// Hint Toggle
+function toggleHint() {
+  hintShown[currentIndex] = !hintShown[currentIndex];
+  renderQuestion();
+}
+
+// Update Stats Bar
+function updateStatsDisplay() {
+  document.getElementById('stat-score').textContent = score;
+  document.getElementById('stat-correct').textContent = correctCount;
+  document.getElementById('stat-incorrect').textContent = incorrectCount;
   
-  renderDays(); 
-  renderSlots(); 
-  upd();
-  showScreen('s-book');
+  const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+  document.getElementById('stat-accuracy').textContent = `${accuracy}%`;
 }
 
-function downloadPDF(){
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Get values
-  const fn = document.getElementById('fname').value;
-  const ln = document.getElementById('lname').value;
-  const em = document.getElementById('email').value;
-  const svc = document.getElementById('svc').value;
-  const ref = document.getElementById('conf-ref').textContent;
-
-  // Title
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text("Booking Confirmation", 20, 20);
-
-  // Content
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(12);
-
-  let y = 40;
-
-  doc.text(`Reference #: ${ref}`, 20, y); y += 10;
-  doc.text(`Name: ${fn} ${ln}`, 20, y); y += 10;
-  doc.text(`Email: ${em}`, 20, y); y += 10;
-  doc.text(`Service: ${svc}`, 20, y); y += 10;
-  doc.text(`Date: ${day}`, 20, y); y += 10;
-  doc.text(`Time: ${time}`, 20, y); y += 20;
-
-  doc.text("Please arrive 10 minutes before your schedule.", 20, y);
-
-  // Save
-  doc.save(`booking-${ref}.pdf`);
+// Navigation Controls
+function prevQuestion() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderQuestion();
+  }
 }
 
-renderDays(); 
-renderSlots();  
-upd();
+function nextQuestion() {
+  if (currentIndex < quizQuestions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+// Results Screen
+function showResults() {
+  document.getElementById('quiz-card').style.display = 'none';
+  const resultsCard = document.getElementById('results-card');
+  resultsCard.style.display = 'block';
+
+  const pct = Math.round((score / quizQuestions.length) * 100);
+  document.getElementById('final-score').textContent = `${score}/${quizQuestions.length}`;
+  document.getElementById('final-pct').textContent = `${pct}%`;
+
+  let msg = '';
+  if (pct >= 80) {
+    msg = 'Outstanding performance! You are well prepared for the ECE Licensure Exam GEAS portion.';
+  } else if (pct >= 60) {
+    msg = 'Good job! Review the concepts you missed to boost your score higher.';
+  } else {
+    msg = 'Keep practicing! Focus on understanding formulas, laws, and foundational engineering principles.';
+  }
+  document.getElementById('final-msg').textContent = msg;
+}
+
+// Restart Quiz
+function restartQuiz() {
+  initQuiz();
+}
+
+// On Page Load
+window.onload = function() {
+  initQuiz();
+};
 </script>
+
+</body>
+</html>
